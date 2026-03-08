@@ -2,7 +2,10 @@
 export default {
   content: [
     "./index.html",
+    "./about.html",
+    "./services.html",
     "./product.html",
+    "./portfolio.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {

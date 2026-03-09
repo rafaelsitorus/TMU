@@ -84,9 +84,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <a href="/about.html"     class="nav-pill nav-pill-lg">About</a>
         <a href="/services.html"  class="nav-pill nav-pill-lg">Our Services</a>
         <div class="relative" id="product-mega-wrap">
-          <button class="nav-pill nav-pill-lg flex items-center gap-1.5" id="product-mega-btn">
+          <button class="nav-pill nav-pill-lg" id="product-mega-btn">
             Product
-            <svg class="w-3 h-3 opacity-50 transition-transform duration-200" id="product-mega-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div id="product-mega-panel" class="mega-panel hidden">
             <div class="flex gap-0">
@@ -167,6 +166,156 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
 
   </div><!-- end #home-root hero -->
+
+    <!-- ═══ Parallax scroll sections ═══ -->
+    <div class="parallax-sections">
+
+      <!-- 1. Welcome — align LEFT -->
+      <section class="plx-section plx-accent-cyan plx-align-left">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1"></span>
+          <span class="plx-orb plx-orb-2"></span>
+          <span class="plx-ring plx-ring-1"></span>
+          <span class="plx-grid-lines"></span>
+          <span class="plx-bg-block plx-bg-block-1"></span>
+          <span class="plx-bg-block plx-bg-block-2"></span>
+          <span class="plx-bg-line plx-bg-line-1"></span>
+          <span class="plx-bg-line plx-bg-line-2"></span>
+          <span class="plx-bg-circle plx-bg-circle-1"></span>
+        </div>
+        <div class="plx-inner plx-from-left">
+          <span class="plx-label">01</span>
+          <h2 class="plx-heading">Welcome to Our Site</h2>
+          <p class="plx-text">PT. Todo Mitra Utama adalah perusahaan konstruksi yang bergerak di bidang mekanikal dan elektrikal. Berkantor pusat di Jakarta Barat, kami adalah anggota resmi AKLI (Asosiasi Kontraktor Listrik dan Mekanikal Indonesia) yang telah berpengalaman menangani berbagai proyek komersial dan industri berskala nasional.</p>
+        </div>
+      </section>
+
+      <!-- 2. Our Specialty — from RIGHT -->
+      <section class="plx-section plx-accent-amber plx-section-carousel">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1"></span>
+          <span class="plx-orb plx-orb-2"></span>
+          <span class="plx-hex plx-hex-1"></span>
+          <span class="plx-hex plx-hex-2"></span>
+          <span class="plx-dots"></span>
+          <span class="plx-bg-block plx-bg-block-1"></span>
+          <span class="plx-bg-block plx-bg-block-3"></span>
+          <span class="plx-bg-line plx-bg-line-1"></span>
+          <span class="plx-bg-circle plx-bg-circle-1"></span>
+          <span class="plx-bg-circle plx-bg-circle-2"></span>
+        </div>
+        <div class="plx-inner plx-from-right">
+          <span class="plx-label">02</span>
+          <h2 class="plx-heading">Our Specialty</h2>
+          <div class="plx-carousel" id="specialty-carousel"></div>
+        </div>
+      </section>
+
+      <!-- 3. Our Commitment — align LEFT -->
+      <section class="plx-section plx-accent-emerald plx-align-left">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1"></span>
+          <span class="plx-orb plx-orb-2"></span>
+          <span class="plx-ring plx-ring-1"></span>
+          <span class="plx-ring plx-ring-2"></span>
+          <span class="plx-cross plx-cross-1"></span>
+          <span class="plx-cross plx-cross-2"></span>
+          <span class="plx-bg-block plx-bg-block-2"></span>
+          <span class="plx-bg-block plx-bg-block-3"></span>
+          <span class="plx-bg-line plx-bg-line-1"></span>
+          <span class="plx-bg-line plx-bg-line-2"></span>
+          <span class="plx-bg-circle plx-bg-circle-2"></span>
+        </div>
+        <div class="plx-inner plx-from-left">
+          <span class="plx-label">03</span>
+          <h2 class="plx-heading">Our Commitment</h2>
+          <div class="plx-stats">
+            <div class="plx-stat">
+              <span class="plx-stat-num">50+</span>
+              <span class="plx-stat-label">Proyek Selesai</span>
+            </div>
+            <div class="plx-stat">
+              <span class="plx-stat-num">15+</span>
+              <span class="plx-stat-label">Tahun Pengalaman</span>
+            </div>
+            <div class="plx-stat">
+              <span class="plx-stat-num">30+</span>
+              <span class="plx-stat-label">Tenaga Ahli</span>
+            </div>
+            <div class="plx-stat">
+              <span class="plx-stat-num">100%</span>
+              <span class="plx-stat-label">Kepuasan Klien</span>
+            </div>
+          </div>
+          <p class="plx-text mt-6">Kami berkomitmen terhadap kualitas, keselamatan kerja, dan ketepatan waktu dalam setiap proyek. Standar ISO dan prosedur K3 kami terapkan di seluruh lini operasional.</p>
+        </div>
+      </section>
+
+      <!-- 4. Why Choose Us — align RIGHT -->
+      <section class="plx-section plx-accent-violet plx-align-right">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1"></span>
+          <span class="plx-orb plx-orb-2"></span>
+          <span class="plx-hex plx-hex-1"></span>
+          <span class="plx-dots"></span>
+          <span class="plx-grid-lines"></span>
+          <span class="plx-bg-block plx-bg-block-1"></span>
+          <span class="plx-bg-block plx-bg-block-2"></span>
+          <span class="plx-bg-line plx-bg-line-2"></span>
+          <span class="plx-bg-circle plx-bg-circle-1"></span>
+          <span class="plx-bg-circle plx-bg-circle-2"></span>
+        </div>
+        <div class="plx-inner plx-from-right">
+          <span class="plx-label">04</span>
+          <h2 class="plx-heading">Why Choose Us</h2>
+          <div class="plx-list">
+            <div class="plx-list-item">
+              <span class="plx-list-bullet"></span>
+              <div>
+                <h4 class="plx-list-title">Anggota Resmi AKLI</h4>
+                <p class="plx-list-desc">Terdaftar dan bersertifikasi oleh Asosiasi Kontraktor Listrik dan Mekanikal Indonesia.</p>
+              </div>
+            </div>
+            <div class="plx-list-item">
+              <span class="plx-list-bullet"></span>
+              <div>
+                <h4 class="plx-list-title">Tim Berpengalaman</h4>
+                <p class="plx-list-desc">Tenaga ahli profesional dengan sertifikasi dan pengalaman bertahun-tahun di bidangnya.</p>
+              </div>
+            </div>
+            <div class="plx-list-item">
+              <span class="plx-list-bullet"></span>
+              <div>
+                <h4 class="plx-list-title">Kualitas Terjamin</h4>
+                <p class="plx-list-desc">Material berkualitas dari brand terpercaya dengan garansi dan sertifikasi standar.</p>
+              </div>
+            </div>
+            <div class="plx-list-item">
+              <span class="plx-list-bullet"></span>
+              <div>
+                <h4 class="plx-list-title">Harga Kompetitif</h4>
+                <p class="plx-list-desc">Penawaran harga terbaik dengan tetap mengutamakan kualitas dan keselamatan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Let's Build Together — from LEFT -->
+      <section class="plx-section plx-accent-warm">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1"></span>
+          <span class="plx-orb plx-orb-2"></span>
+          <span class="plx-ring plx-ring-1"></span>
+          <span class="plx-cross plx-cross-1"></span>
+          <span class="plx-cross plx-cross-2"></span>
+          <span class="plx-dots"></span>
+          <span class="plx-bg-block plx-bg-block-1"></span>
+          <span class="plx-bg-circle plx-bg-circle-1"></span>
+        </div>
+      </section>
+
+    </div><!-- end parallax sections -->
 
     <!-- Footer -->
     <footer class="z-10 bg-[#0a0a0a] border-t border-white/[0.06]">
@@ -263,20 +412,16 @@ navOverlay.addEventListener('click', () => navDrawer.classList.add('hidden'))
 // ─── Product mega-menu (desktop) ─────────────────────────────
 const megaBtn   = document.getElementById('product-mega-btn')!
 const megaPanel = document.getElementById('product-mega-panel')!
-const megaArrow = document.getElementById('product-mega-arrow')!
 const megaWrap  = document.getElementById('product-mega-wrap')!
 
 megaBtn.addEventListener('click', () => {
-  const open = !megaPanel.classList.contains('hidden')
-  megaPanel.classList.toggle('hidden', open)
-  megaArrow.style.transform = open ? '' : 'rotate(180deg)'
+  megaPanel.classList.toggle('hidden')
 })
 
 // Close mega-menu on outside click
 document.addEventListener('click', (e) => {
   if (!megaWrap.contains(e.target as Node)) {
     megaPanel.classList.add('hidden')
-    megaArrow.style.transform = ''
   }
 })
 
@@ -429,3 +574,157 @@ window.addEventListener('mouseup', () => {
 carousel.addEventListener('scroll', () => { wrapScroll() }, { passive: true })
 carousel.addEventListener('touchstart', () => { isPaused = true }, { passive: true })
 carousel.addEventListener('touchend', () => { setTimeout(() => { isPaused = false }, 2500) })
+
+// ─── Parallax scroll reveal ──────────────────────────────────
+const plxObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('plx-visible')
+    }
+  })
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' })
+
+document.querySelectorAll('.plx-from-left, .plx-from-right').forEach(el => {
+  plxObserver.observe(el)
+})
+
+// ─── Specialty carousel: build cards + infinite scroll ──────
+const specData = [
+  { icon: '⚡', title: 'Electrical & Mechanical Installation', desc: 'Instalasi sistem kelistrikan dan mekanikal untuk gedung komersial, pabrik, dan fasilitas industri.', color: '#f59e0b' },
+  { icon: '📡', title: 'Telecommunication System', desc: 'Instalasi jaringan telekomunikasi, fiber optic, dan sistem komunikasi terintegrasi.', color: '#3b82f6' },
+  { icon: '🔊', title: 'Sound System', desc: 'Sistem audio profesional untuk gedung, ruang konferensi, dan area publik.', color: '#a855f7' },
+  { icon: '🔥', title: 'Fire Alarm System', desc: 'Instalasi sistem deteksi dan alarm kebakaran sesuai standar keselamatan nasional.', color: '#ef4444' },
+  { icon: '🔩', title: 'Cable Tray & Lighting Pole', desc: 'Fabrikasi dan pemasangan cable tray, rak kabel, serta tiang penerangan.', color: '#10b981' },
+  { icon: '📦', title: 'Supply of Electric Materials', desc: 'Penyediaan material listrik berkualitas dari brand terpercaya nasional dan internasional.', color: '#f97316' },
+]
+
+function buildSpecCard(d: typeof specData[0], idx: number) {
+  return `<div class="plx-tilt-card" data-index="${idx}" style="--card-color:${d.color}">
+    <div class="plx-tilt-glare"></div>
+    <div class="plx-card-accent"></div>
+    <span class="plx-card-icon">${d.icon}</span>
+    <h4 class="plx-card-title">${d.title}</h4>
+    <p class="plx-card-desc">${d.desc}</p>
+  </div>`
+}
+
+const specCarousel = document.getElementById('specialty-carousel')
+if (specCarousel) {
+  // 5 copies for infinite scroll
+  const html = Array(5).fill(specData).flat().map((d, i) => buildSpecCard(d, i % 6)).join('')
+  specCarousel.innerHTML = html
+
+  // Stagger entrance
+  const cardEntranceObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const allCards = specCarousel.querySelectorAll<HTMLElement>('.plx-tilt-card')
+        allCards.forEach((card, i) => {
+          if (i < 6) setTimeout(() => card.classList.add('plx-card-visible'), i * 100)
+          else card.classList.add('plx-card-visible')
+        })
+        cardEntranceObs.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.15 })
+  cardEntranceObs.observe(specCarousel)
+
+  // Infinite auto-scroll
+  const SPEC_CARD_COUNT = 6
+  let specPaused = false
+  let specDragging = false
+
+  function getSpecSetWidth() {
+    const firstCard = specCarousel!.querySelector<HTMLElement>('.plx-tilt-card')
+    if (!firstCard) return 0
+    const style = getComputedStyle(specCarousel!)
+    const gap = parseFloat(style.gap) || 18
+    return (firstCard.offsetWidth + gap) * SPEC_CARD_COUNT
+  }
+
+  function wrapSpecScroll() {
+    const setW = getSpecSetWidth()
+    if (setW <= 0) return
+    const maxS = setW * 4
+    const minS = setW
+    if (specCarousel!.scrollLeft >= maxS) specCarousel!.scrollLeft -= setW
+    else if (specCarousel!.scrollLeft < minS) specCarousel!.scrollLeft += setW
+  }
+
+  function specAutoLoop() {
+    requestAnimationFrame(specAutoLoop)
+    if (!specCarousel!.offsetWidth) return
+    if (!specPaused && !specDragging) {
+      specCarousel!.scrollLeft += 0.5
+      wrapSpecScroll()
+    }
+  }
+
+  function initSpecScroll() {
+    if (!specCarousel!.offsetWidth) { setTimeout(initSpecScroll, 300); return }
+    const setW = getSpecSetWidth()
+    if (setW <= 0) { requestAnimationFrame(initSpecScroll); return }
+    specCarousel!.style.scrollBehavior = 'auto'
+    specCarousel!.scrollLeft = setW * 2
+    requestAnimationFrame(specAutoLoop)
+  }
+
+  if (document.readyState === 'complete') requestAnimationFrame(initSpecScroll)
+  else window.addEventListener('load', () => requestAnimationFrame(initSpecScroll))
+
+  specCarousel.addEventListener('mouseenter', () => { specPaused = true })
+  specCarousel.addEventListener('mouseleave', () => { specPaused = false })
+  specCarousel.addEventListener('scroll', wrapSpecScroll, { passive: true })
+  specCarousel.addEventListener('touchstart', () => { specPaused = true }, { passive: true })
+  specCarousel.addEventListener('touchend', () => { setTimeout(() => { specPaused = false }, 2000) })
+
+  // Drag scroll
+  let specStartX = 0, specScrollStart = 0
+  specCarousel.addEventListener('mousedown', (e) => {
+    specDragging = true
+    specStartX = e.pageX
+    specScrollStart = specCarousel!.scrollLeft
+    specCarousel!.style.cursor = 'grabbing'
+  })
+  window.addEventListener('mousemove', (e) => {
+    if (!specDragging) return
+    e.preventDefault()
+    specCarousel!.scrollLeft = specScrollStart - (e.pageX - specStartX)
+  })
+  window.addEventListener('mouseup', () => {
+    if (!specDragging) return
+    specDragging = false
+    specCarousel!.style.cursor = ''
+    wrapSpecScroll()
+  })
+}
+
+// ─── 3D tilt effect on specialty cards ──────────────────────
+function initTiltCards() {
+  document.querySelectorAll<HTMLElement>('.plx-tilt-card').forEach(card => {
+    const glare = card.querySelector<HTMLElement>('.plx-tilt-glare')
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      const cx = rect.width / 2
+      const cy = rect.height / 2
+      const rotY = ((x - cx) / cx) * 18
+      const rotX = ((cy - y) / cy) * 14
+      card.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.05)`
+      if (glare) {
+        const gx = (x / rect.width) * 100
+        const gy = (y / rect.height) * 100
+        glare.style.opacity = '1'
+        glare.style.background = `radial-gradient(circle at ${gx}% ${gy}%, var(--card-color, hsla(var(--ac), 0.3)) 0%, transparent 55%)`
+      }
+    })
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = ''
+      if (glare) glare.style.opacity = '0'
+    })
+  })
+}
+setTimeout(initTiltCards, 200)

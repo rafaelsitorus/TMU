@@ -40,8 +40,28 @@ const buildCard = (c: CardData) => `
 const repeated = [...cards, ...cards, ...cards, ...cards, ...cards]
 const allCardsHTML = repeated.map(buildCard).join('')
 
+const buildMobileCard = (c: CardData) => `
+  <a href="${c.href}" class="group relative overflow-hidden rounded-[1.5rem] block aspect-[5/3]">
+    <div class="absolute inset-0">
+      <img src="${c.img}" alt="${c.label}" class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-all duration-700 ${c.grayscale ? 'grayscale' : ''}">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10"></div>
+    <div class="absolute inset-0 p-6 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-2 h-2 bg-white rounded-sm"></div>
+          <span class="text-[10px] font-medium tracking-[0.3em] text-white/60 uppercase">${c.label}</span>
+        </div>
+        <h3 class="text-xl font-light text-white leading-snug tracking-wide">${c.title}</h3>
+      </div>
+      <span class="self-start px-5 py-2.5 bg-white/10 backdrop-blur-sm rounded-full text-[11px] font-medium text-white/80 border border-white/20">READ</span>
+    </div>
+  </a>
+`
+const mobileCardsHTML = cards.map(buildMobileCard).join('')
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div class="h-screen bg-black text-white flex flex-col overflow-hidden">
+  <div id="home-root" class="min-h-screen md:h-screen bg-black text-white flex flex-col md:overflow-hidden">
 
     <!-- Navbar -->
     <nav class="flex-shrink-0 z-20 px-5 md:px-8 py-5 md:py-6 flex items-center gap-4">
@@ -98,18 +118,23 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </div>
 
-    <!-- Tagline + Carousel wrapper -->
-    <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Tagline + Cards wrapper -->
+    <div class="flex-1 flex flex-col md:overflow-hidden">
 
       <!-- Tagline: centered in its own zone between navbar and carousel -->
-      <div class="flex-none flex items-center justify-center px-4" style="height: clamp(90px, 15vh, 140px);">
-        <h1 class="mt-16 text-lg md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/70 text-center">
+      <div class="flex-none flex items-center justify-center px-4" style="height: clamp(60px, 12vh, 140px);">
+        <h1 class="mt-6 md:mt-16 text-lg md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/70 text-center">
           Konstruksi profesional untuk masa depan.
         </h1>
       </div>
 
-      <!-- Carousel -->
-      <div id="carousel" class="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
+      <!-- Mobile: vertical cards -->
+      <div class="md:hidden px-4 pb-6 space-y-4">
+        ${mobileCardsHTML}
+      </div>
+
+      <!-- Desktop: horizontal carousel -->
+      <div id="carousel" class="hidden md:block flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
         <div id="track" class="flex h-full items-center"> ${allCardsHTML}
         </div>
       </div>
@@ -137,7 +162,7 @@ document.getElementById('nav-close')?.addEventListener('click', () => navDrawer.
 navOverlay.addEventListener('click', () => navDrawer.classList.add('hidden'))
 
 // ─── Three.js wireframe background ──────────────────────────
-const mainDiv = document.querySelector<HTMLElement>('.h-screen')!
+const mainDiv = document.getElementById('home-root')!
 initThreeBackground(mainDiv)
 
 // ─── Custom cursor ───────────────────────────────────────────
@@ -186,11 +211,12 @@ let isDragging = false
 const AUTO_SPEED = 0.4 // px per frame — gentle
 
 function autoScrollLoop() {
+  requestAnimationFrame(autoScrollLoop)
+  if (!carousel.offsetWidth) return // hidden on mobile
   if (!isPaused && !isDragging) {
     carousel.scrollLeft += AUTO_SPEED
     wrapScroll()
   }
-  requestAnimationFrame(autoScrollLoop)
 }
 
 function wrapScroll() {
@@ -208,6 +234,8 @@ function wrapScroll() {
 
 // Initial position: wait for layout to be fully ready (critical for Safari)
 function initScroll() {
+  // Skip if carousel is hidden (mobile)
+  if (!carousel.offsetWidth) { setTimeout(initScroll, 500); return }
   const setW = getOneSetWidth()
   if (setW <= 0) {
     // Layout not ready yet (common in Safari) — retry next frame

@@ -94,7 +94,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
 
   <!-- ── Content ── -->
   <main class="lg:ml-80 xl:ml-[360px] p-4 md:p-6 xl:p-8 pb-16">
-    <div class="max-w-5xl space-y-5 md:space-y-6">${content}</div>
+    <div class="space-y-5 md:space-y-6">${content}</div>
   </main>
 
 </div>`

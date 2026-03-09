@@ -6,6 +6,7 @@ export default {
     "./services.html",
     "./product.html",
     "./portfolio.html",
+    "./contact.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {

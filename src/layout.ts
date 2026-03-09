@@ -1,5 +1,6 @@
 import './style.css'
 import { initCursor } from './cursor'
+import { productCategories, brandHref } from './product-data'
 
 interface NavItem {
   href: string
@@ -14,10 +15,58 @@ const navItems: NavItem[] = [
   { href: '/portfolio.html', label: 'Portfolio',     desc: 'Proyek yang telah selesai.' },
 ]
 
+/** Build the expandable product tree for sidebar */
+function buildProductTree(isActive: boolean): string {
+  const opClass = isActive ? 'opacity-100' : 'opacity-30 hover:opacity-60'
+  const catTree = productCategories.map(cat => `
+    <button class="sidebar-cat-toggle" data-cat="${cat.slug}">
+      <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      ${cat.name}
+    </button>
+    <div class="sidebar-cat-brands hidden" data-cat-brands="${cat.slug}">
+      ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="sidebar-brand-link">${b.name}</a>`).join('')}
+    </div>
+  `).join('')
+
+  return `<div class="block mb-7 transition-opacity duration-300 ${opClass}">
+    <button class="sidebar-product-toggle flex items-center gap-2 mb-1 w-full text-left">
+      ${isActive ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
+      <span class="text-[11px] font-medium tracking-[0.2em] uppercase">Product</span>
+      <svg class="w-3 h-3 ml-auto opacity-40 transition-transform duration-200 product-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <p class="text-[10px] tracking-wider text-white/40 uppercase leading-relaxed ${isActive ? 'pl-3.5' : ''}">Produk berkualitas tinggi.</p>
+    <div class="sidebar-product-list hidden mt-2 pl-3.5 space-y-0.5">
+      ${catTree}
+    </div>
+  </div>`
+}
+
+/** Highlight the sidebar brand link that matches the current URL */
+function _highlightActiveBrand() {
+  const brandSlug = new URLSearchParams(window.location.search).get('brand')
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar-brand-link').forEach(a => {
+    const url = new URL(a.href)
+    a.classList.toggle('active-brand', !!brandSlug && url.searchParams.get('brand') === brandSlug)
+  })
+}
+
+/** Swap only the main content + page-title without touching the sidebar */
+export function updateMainContent(content: string, pageTitle: string) {
+  const main = document.querySelector('main > div') as HTMLElement | null
+  if (main) main.innerHTML = content
+  // Update the page title line in sidebar
+  const titleEl = document.querySelector<HTMLElement>('.sidebar-page-title')
+  if (titleEl) titleEl.textContent = pageTitle
+  // Re-highlight active brand
+  _highlightActiveBrand()
+}
+
 export function renderPage(activeLabel: string, pageTitle: string, content: string) {
 
   const sidebar = navItems.map(n => {
     const a = n.label === activeLabel
+    // Product gets a special expandable tree
+    if (n.label === 'Product') return buildProductTree(a)
     return `<a href="${n.href}" class="block mb-7 transition-opacity duration-300 ${a ? 'opacity-100' : 'opacity-30 hover:opacity-60'}">
       <div class="flex items-center gap-2 mb-1">
         ${a ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
@@ -27,15 +76,26 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     </a>`
   }).join('')
 
-  const mobileLinks = navItems.map(n =>
-    `<a href="${n.href}" class="block py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">${n.label}</a>`
-  ).join('')
+  const mobileLinks = navItems.map(n => {
+    if (n.label === 'Product') {
+      return `<button class="block w-full text-left py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors mob-page-product-toggle ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">Product ▾</button>
+      <div class="mob-page-product-menu hidden pl-3 border-b border-white/[0.06]">
+        ${productCategories.map(cat => `
+          <button class="mob-cat-toggle">${cat.name} ›</button>
+          <div class="mob-cat-brands hidden">
+            ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="mob-brand-link">${b.name}</a>`).join('')}
+          </div>
+        `).join('')}
+      </div>`
+    }
+    return `<a href="${n.href}" class="block py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">${n.label}</a>`
+  }).join('')
 
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="min-h-screen bg-black text-white">
 
   <!-- ── Desktop sidebar ── -->
-  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-black border-r border-white/[0.06] px-8 py-8 overflow-y-auto">
+  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-black border-r border-white/[0.06] px-8 py-8 overflow-y-hidden">
     <a href="/" class="mb-10 inline-flex">
       <div class="w-11 h-11 border border-white/20 rounded-xl flex items-center justify-center hover:border-white/40 transition-colors">
         <span class="text-white font-semibold text-[11px] tracking-[0.25em]">TMU</span>
@@ -47,7 +107,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
         <span class="w-1.5 h-1.5 bg-white rounded-sm block"></span>
         <span class="text-[11px] font-medium tracking-[0.25em] text-white/60 uppercase">${activeLabel}</span>
       </div>
-      <h1 class="text-lg font-light text-white/80 leading-relaxed">${pageTitle}</h1>
+      <h1 class="text-lg font-light text-white/80 leading-relaxed sidebar-page-title">${pageTitle}</h1>
     </div>
 
     <div class="h-px bg-white/[0.08] mb-8"></div>
@@ -106,6 +166,90 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     document.getElementById('mob-drawer')?.classList.add('hidden'))
   document.getElementById('mob-overlay')?.addEventListener('click', () =>
     document.getElementById('mob-drawer')?.classList.add('hidden'))
+
+  // Helper: open/close product list + rotate arrow
+  function setProductListOpen(open: boolean) {
+    const list  = document.querySelector('.sidebar-product-list')  as HTMLElement | null
+    const arrow = document.querySelector('.product-arrow')          as HTMLElement | null
+    if (!list) return
+    list.classList.toggle('hidden', !open)
+    if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : ''
+  }
+
+  // Sidebar: Product toggle (click entire row — label or arrow)
+  document.querySelectorAll('.sidebar-product-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const list = btn.parentElement?.querySelector('.sidebar-product-list') as HTMLElement
+      if (list) {
+        const nowOpen = !list.classList.contains('hidden')
+        setProductListOpen(nowOpen ? false : true)
+      }
+    })
+  })
+
+  // Sidebar: Category toggle — whole button (name + arrow) is clickable
+  document.querySelectorAll('.sidebar-cat-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const brands = btn.nextElementSibling as HTMLElement
+      if (brands) {
+        brands.classList.toggle('hidden')
+        btn.classList.toggle('open')
+      }
+    })
+  })
+
+  // Auto-expand product list and active category on load
+  const sp = new URLSearchParams(window.location.search)
+  const activeCatSlug = sp.get('cat')
+  if (window.location.pathname.includes('product')) {
+    setProductListOpen(true)
+    if (activeCatSlug) {
+      const brandsEl = document.querySelector(`[data-cat-brands="${activeCatSlug}"]`) as HTMLElement | null
+      const toggleEl = document.querySelector(`[data-cat="${activeCatSlug}"]`)
+      if (brandsEl) brandsEl.classList.remove('hidden')
+      if (toggleEl) toggleEl.classList.add('open')
+    }
+  }
+
+  // SPA navigation for brand links — update URL + fire custom event
+  function handleBrandLinkClick(e: Event) {
+    // If we're NOT already on the product page, let the browser navigate normally 
+    // so it properly loads product.ts instead of staying dead on about.ts/etc.
+    const isProductPage = window.location.pathname.includes('product.html')
+    if (!isProductPage) return
+
+    const a = e.currentTarget as HTMLAnchorElement
+    if (!a.href.includes('product.html')) return
+    
+    e.preventDefault()
+    if (a.href === window.location.href) return
+    
+    history.pushState({}, '', a.href)
+    window.dispatchEvent(new CustomEvent('spa-navigate'))
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar-brand-link, .mob-brand-link').forEach(a => {
+    a.addEventListener('click', handleBrandLinkClick)
+  })
+
+  // Highlight the currently active brand in the sidebar
+  _highlightActiveBrand()
+
+  // Mobile drawer: Product toggle
+  document.querySelectorAll('.mob-page-product-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const menu = btn.nextElementSibling as HTMLElement
+      menu?.classList.toggle('hidden')
+    })
+  })
+
+  // Mobile drawer: Category toggles
+  document.querySelectorAll('.mob-cat-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const brands = btn.nextElementSibling as HTMLElement
+      brands?.classList.toggle('hidden')
+    })
+  })
 
   initCursor()
 }

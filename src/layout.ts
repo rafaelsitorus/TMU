@@ -41,6 +41,26 @@ function buildProductTree(isActive: boolean): string {
   </div>`
 }
 
+/** Highlight the sidebar brand link that matches the current URL */
+function _highlightActiveBrand() {
+  const brandSlug = new URLSearchParams(window.location.search).get('brand')
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar-brand-link').forEach(a => {
+    const url = new URL(a.href)
+    a.classList.toggle('active-brand', !!brandSlug && url.searchParams.get('brand') === brandSlug)
+  })
+}
+
+/** Swap only the main content + page-title without touching the sidebar */
+export function updateMainContent(content: string, pageTitle: string) {
+  const main = document.querySelector('main > div') as HTMLElement | null
+  if (main) main.innerHTML = content
+  // Update the page title line in sidebar
+  const titleEl = document.querySelector<HTMLElement>('.sidebar-page-title')
+  if (titleEl) titleEl.textContent = pageTitle
+  // Re-highlight active brand
+  _highlightActiveBrand()
+}
+
 export function renderPage(activeLabel: string, pageTitle: string, content: string) {
 
   const sidebar = navItems.map(n => {
@@ -75,7 +95,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
 <div class="min-h-screen bg-black text-white">
 
   <!-- ── Desktop sidebar ── -->
-  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-black border-r border-white/[0.06] px-8 py-8 overflow-y-auto">
+  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-black border-r border-white/[0.06] px-8 py-8 overflow-y-hidden">
     <a href="/" class="mb-10 inline-flex">
       <div class="w-11 h-11 border border-white/20 rounded-xl flex items-center justify-center hover:border-white/40 transition-colors">
         <span class="text-white font-semibold text-[11px] tracking-[0.25em]">TMU</span>
@@ -87,7 +107,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
         <span class="w-1.5 h-1.5 bg-white rounded-sm block"></span>
         <span class="text-[11px] font-medium tracking-[0.25em] text-white/60 uppercase">${activeLabel}</span>
       </div>
-      <h1 class="text-lg font-light text-white/80 leading-relaxed">${pageTitle}</h1>
+      <h1 class="text-lg font-light text-white/80 leading-relaxed sidebar-page-title">${pageTitle}</h1>
     </div>
 
     <div class="h-px bg-white/[0.08] mb-8"></div>
@@ -147,19 +167,27 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
   document.getElementById('mob-overlay')?.addEventListener('click', () =>
     document.getElementById('mob-drawer')?.classList.add('hidden'))
 
-  // Sidebar: Product toggle → show/hide category list
+  // Helper: open/close product list + rotate arrow
+  function setProductListOpen(open: boolean) {
+    const list  = document.querySelector('.sidebar-product-list')  as HTMLElement | null
+    const arrow = document.querySelector('.product-arrow')          as HTMLElement | null
+    if (!list) return
+    list.classList.toggle('hidden', !open)
+    if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : ''
+  }
+
+  // Sidebar: Product toggle (click entire row — label or arrow)
   document.querySelectorAll('.sidebar-product-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const list = btn.parentElement?.querySelector('.sidebar-product-list') as HTMLElement
-      const arrow = btn.querySelector('.product-arrow') as HTMLElement
       if (list) {
-        const open = list.classList.toggle('hidden')
-        if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)'
+        const nowOpen = !list.classList.contains('hidden')
+        setProductListOpen(nowOpen ? false : true)
       }
     })
   })
 
-  // Sidebar: Category toggle → show/hide brands
+  // Sidebar: Category toggle — whole button (name + arrow) is clickable
   document.querySelectorAll('.sidebar-cat-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const brands = btn.nextElementSibling as HTMLElement
@@ -169,6 +197,43 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
       }
     })
   })
+
+  // Auto-expand product list and active category on load
+  const sp = new URLSearchParams(window.location.search)
+  const activeCatSlug = sp.get('cat')
+  if (window.location.pathname.includes('product')) {
+    setProductListOpen(true)
+    if (activeCatSlug) {
+      const brandsEl = document.querySelector(`[data-cat-brands="${activeCatSlug}"]`) as HTMLElement | null
+      const toggleEl = document.querySelector(`[data-cat="${activeCatSlug}"]`)
+      if (brandsEl) brandsEl.classList.remove('hidden')
+      if (toggleEl) toggleEl.classList.add('open')
+    }
+  }
+
+  // SPA navigation for brand links — update URL + fire custom event
+  function handleBrandLinkClick(e: Event) {
+    // If we're NOT already on the product page, let the browser navigate normally 
+    // so it properly loads product.ts instead of staying dead on about.ts/etc.
+    const isProductPage = window.location.pathname.includes('product.html')
+    if (!isProductPage) return
+
+    const a = e.currentTarget as HTMLAnchorElement
+    if (!a.href.includes('product.html')) return
+    
+    e.preventDefault()
+    if (a.href === window.location.href) return
+    
+    history.pushState({}, '', a.href)
+    window.dispatchEvent(new CustomEvent('spa-navigate'))
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar-brand-link, .mob-brand-link').forEach(a => {
+    a.addEventListener('click', handleBrandLinkClick)
+  })
+
+  // Highlight the currently active brand in the sidebar
+  _highlightActiveBrand()
 
   // Mobile drawer: Product toggle
   document.querySelectorAll('.mob-page-product-toggle').forEach(btn => {

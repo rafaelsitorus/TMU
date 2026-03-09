@@ -162,6 +162,120 @@ body.c-hover #c-ring {
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* ── Product mega-menu (desktop navbar) ── */
+.mega-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12, 12, 12, 0.96);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  padding: 1.25rem 0.5rem;
+  min-width: 420px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  animation: megaFadeIn 0.2s ease;
+}
+@keyframes megaFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.mega-col {
+  flex: 1;
+  padding: 0 0.75rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+.mega-col:last-child { border-right: none; }
+.mega-cat-title {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.6rem;
+  padding: 0 0.5rem;
+}
+.mega-brand-link {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+}
+.mega-brand-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* ── Product accordion (mobile drawer) ── */
+.mob-product-menu {
+  margin-bottom: 0.25rem;
+}
+.mob-cat-toggle {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.75rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  border: none;
+  transition: color 0.2s;
+}
+.mob-cat-toggle:hover { color: rgba(255, 255, 255, 0.85); }
+.mob-cat-brands {
+  padding-left: 0.75rem;
+}
+.mob-brand-link {
+  display: block;
+  padding: 0.3rem 0.75rem;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.mob-brand-link:hover { color: #fff; }
+
+/* ── Sidebar product tree (inner pages) ── */
+.sidebar-cat-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.35rem 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  background: transparent;
+  border: none;
+  transition: color 0.2s;
+}
+.sidebar-cat-toggle:hover { color: rgba(255, 255, 255, 0.8); }
+.sidebar-cat-toggle .arrow-icon {
+  width: 10px; height: 10px;
+  transition: transform 0.2s;
+}
+.sidebar-cat-toggle.open .arrow-icon { transform: rotate(90deg); }
+.sidebar-brand-link {
+  display: block;
+  padding: 0.25rem 0 0.25rem 1.2rem;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.sidebar-brand-link:hover { color: #fff; }
+
 /* Widget Card */
 .widget-card {
   transition: transform 0.45s cubic-bezier(.23,1,.32,1), box-shadow 0.45s ease;

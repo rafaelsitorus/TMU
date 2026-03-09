@@ -1,5 +1,6 @@
 import './style.css'
 import { initCursor } from './cursor'
+import { productCategories, brandHref } from './product-data'
 
 interface NavItem {
   href: string
@@ -14,10 +15,38 @@ const navItems: NavItem[] = [
   { href: '/portfolio.html', label: 'Portfolio',     desc: 'Proyek yang telah selesai.' },
 ]
 
+/** Build the expandable product tree for sidebar */
+function buildProductTree(isActive: boolean): string {
+  const opClass = isActive ? 'opacity-100' : 'opacity-30 hover:opacity-60'
+  const catTree = productCategories.map(cat => `
+    <button class="sidebar-cat-toggle" data-cat="${cat.slug}">
+      <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      ${cat.name}
+    </button>
+    <div class="sidebar-cat-brands hidden" data-cat-brands="${cat.slug}">
+      ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="sidebar-brand-link">${b.name}</a>`).join('')}
+    </div>
+  `).join('')
+
+  return `<div class="block mb-7 transition-opacity duration-300 ${opClass}">
+    <button class="sidebar-product-toggle flex items-center gap-2 mb-1 w-full text-left">
+      ${isActive ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
+      <span class="text-[11px] font-medium tracking-[0.2em] uppercase">Product</span>
+      <svg class="w-3 h-3 ml-auto opacity-40 transition-transform duration-200 product-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <p class="text-[10px] tracking-wider text-white/40 uppercase leading-relaxed ${isActive ? 'pl-3.5' : ''}">Produk berkualitas tinggi.</p>
+    <div class="sidebar-product-list hidden mt-2 pl-3.5 space-y-0.5">
+      ${catTree}
+    </div>
+  </div>`
+}
+
 export function renderPage(activeLabel: string, pageTitle: string, content: string) {
 
   const sidebar = navItems.map(n => {
     const a = n.label === activeLabel
+    // Product gets a special expandable tree
+    if (n.label === 'Product') return buildProductTree(a)
     return `<a href="${n.href}" class="block mb-7 transition-opacity duration-300 ${a ? 'opacity-100' : 'opacity-30 hover:opacity-60'}">
       <div class="flex items-center gap-2 mb-1">
         ${a ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
@@ -27,9 +56,20 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     </a>`
   }).join('')
 
-  const mobileLinks = navItems.map(n =>
-    `<a href="${n.href}" class="block py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">${n.label}</a>`
-  ).join('')
+  const mobileLinks = navItems.map(n => {
+    if (n.label === 'Product') {
+      return `<button class="block w-full text-left py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors mob-page-product-toggle ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">Product ▾</button>
+      <div class="mob-page-product-menu hidden pl-3 border-b border-white/[0.06]">
+        ${productCategories.map(cat => `
+          <button class="mob-cat-toggle">${cat.name} ›</button>
+          <div class="mob-cat-brands hidden">
+            ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="mob-brand-link">${b.name}</a>`).join('')}
+          </div>
+        `).join('')}
+      </div>`
+    }
+    return `<a href="${n.href}" class="block py-3 border-b border-white/[0.06] text-[11px] tracking-[0.2em] uppercase transition-colors ${n.label === activeLabel ? 'text-white' : 'text-white/50 hover:text-white'}">${n.label}</a>`
+  }).join('')
 
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class="min-h-screen bg-black text-white">
@@ -106,6 +146,45 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     document.getElementById('mob-drawer')?.classList.add('hidden'))
   document.getElementById('mob-overlay')?.addEventListener('click', () =>
     document.getElementById('mob-drawer')?.classList.add('hidden'))
+
+  // Sidebar: Product toggle → show/hide category list
+  document.querySelectorAll('.sidebar-product-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const list = btn.parentElement?.querySelector('.sidebar-product-list') as HTMLElement
+      const arrow = btn.querySelector('.product-arrow') as HTMLElement
+      if (list) {
+        const open = list.classList.toggle('hidden')
+        if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)'
+      }
+    })
+  })
+
+  // Sidebar: Category toggle → show/hide brands
+  document.querySelectorAll('.sidebar-cat-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const brands = btn.nextElementSibling as HTMLElement
+      if (brands) {
+        brands.classList.toggle('hidden')
+        btn.classList.toggle('open')
+      }
+    })
+  })
+
+  // Mobile drawer: Product toggle
+  document.querySelectorAll('.mob-page-product-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const menu = btn.nextElementSibling as HTMLElement
+      menu?.classList.toggle('hidden')
+    })
+  })
+
+  // Mobile drawer: Category toggles
+  document.querySelectorAll('.mob-cat-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const brands = btn.nextElementSibling as HTMLElement
+      brands?.classList.toggle('hidden')
+    })
+  })
 
   initCursor()
 }

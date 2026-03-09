@@ -1,6 +1,7 @@
 import './style.css'
 import { initThreeBackground } from './three-bg'
 import { initCursor } from './cursor'
+import { productCategories, brandHref } from './product-data'
 
 interface CardData {
   href: string
@@ -82,7 +83,22 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="hidden md:flex items-center gap-1 mr-4">
         <a href="/about.html"     class="nav-pill nav-pill-lg">About</a>
         <a href="/services.html"  class="nav-pill nav-pill-lg">Our Services</a>
-        <a href="/product.html"   class="nav-pill nav-pill-lg">Product</a>
+        <div class="relative" id="product-mega-wrap">
+          <button class="nav-pill nav-pill-lg flex items-center gap-1.5" id="product-mega-btn">
+            Product
+            <svg class="w-3 h-3 opacity-50 transition-transform duration-200" id="product-mega-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="product-mega-panel" class="mega-panel hidden">
+            <div class="flex gap-0">
+              ${productCategories.map(cat => `
+                <div class="mega-col">
+                  <span class="mega-cat-title">${cat.name}</span>
+                  ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="mega-brand-link">${b.name}</a>`).join('')}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
         <a href="/portfolio.html" class="nav-pill nav-pill-lg">Portfolio</a>
       </div>
 
@@ -110,7 +126,15 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="flex flex-col gap-1">
           <a href="/about.html"     class="nav-pill block text-center">About</a>
           <a href="/services.html"  class="nav-pill block text-center">Our Services</a>
-          <a href="/product.html"   class="nav-pill block text-center">Product</a>
+          <button class="nav-pill block text-center w-full mob-product-toggle">Product ▾</button>
+          <div class="mob-product-menu hidden pl-2">
+            ${productCategories.map(cat => `
+              <button class="mob-cat-toggle">${cat.name} ›</button>
+              <div class="mob-cat-brands hidden">
+                ${cat.brands.map(b => `<a href="${brandHref(cat.slug, b.slug)}" class="mob-brand-link">${b.name}</a>`).join('')}
+              </div>
+            `).join('')}
+          </div>
           <a href="/portfolio.html" class="nav-pill block text-center">Portfolio</a>
         </div>
         <a href="/contact.html" class="contact-pill mt-6 block text-center px-4 py-2.5 rounded-full text-[10px] font-medium tracking-[0.2em] uppercase text-white/80">
@@ -235,6 +259,40 @@ const navOverlay  = document.getElementById('nav-overlay')!
 document.getElementById('nav-open')?.addEventListener('click', () => navDrawer.classList.remove('hidden'))
 document.getElementById('nav-close')?.addEventListener('click', () => navDrawer.classList.add('hidden'))
 navOverlay.addEventListener('click', () => navDrawer.classList.add('hidden'))
+
+// ─── Product mega-menu (desktop) ─────────────────────────────
+const megaBtn   = document.getElementById('product-mega-btn')!
+const megaPanel = document.getElementById('product-mega-panel')!
+const megaArrow = document.getElementById('product-mega-arrow')!
+const megaWrap  = document.getElementById('product-mega-wrap')!
+
+megaBtn.addEventListener('click', () => {
+  const open = !megaPanel.classList.contains('hidden')
+  megaPanel.classList.toggle('hidden', open)
+  megaArrow.style.transform = open ? '' : 'rotate(180deg)'
+})
+
+// Close mega-menu on outside click
+document.addEventListener('click', (e) => {
+  if (!megaWrap.contains(e.target as Node)) {
+    megaPanel.classList.add('hidden')
+    megaArrow.style.transform = ''
+  }
+})
+
+// ─── Product accordion (mobile drawer) ──────────────────────
+document.querySelectorAll('.mob-product-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const menu = btn.nextElementSibling as HTMLElement
+    menu?.classList.toggle('hidden')
+  })
+})
+document.querySelectorAll('.mob-cat-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const brands = btn.nextElementSibling as HTMLElement
+    brands?.classList.toggle('hidden')
+  })
+})
 
 // ─── Three.js wireframe background ──────────────────────────
 const mainDiv = document.getElementById('home-root')!

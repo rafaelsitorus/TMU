@@ -341,6 +341,7 @@ let scrollStart = 0
 let dragMoved = 0
 
 carousel.addEventListener('mousedown', (e) => {
+  e.preventDefault() // prevent native link/image drag that steals mouseup
   isDragging = true
   startX = e.pageX
   scrollStart = carousel.scrollLeft
@@ -356,7 +357,7 @@ window.addEventListener('mousemove', (e) => {
   carousel.scrollLeft = scrollStart - dx
 })
 
-window.addEventListener('mouseup', () => {
+function endDrag() {
   if (!isDragging) return
   isDragging = false
   carousel.style.cursor = ''
@@ -365,7 +366,11 @@ window.addEventListener('mouseup', () => {
     const blocker = (ev: Event) => { ev.preventDefault(); ev.stopPropagation() }
     carousel.addEventListener('click', blocker, { capture: true, once: true })
   }
-})
+}
+
+window.addEventListener('mouseup', endDrag)
+// Safety net: if mouse leaves the browser window, release the drag
+document.addEventListener('mouseleave', endDrag)
 
 // ─── Touch: native scroll + wrapping ────────────────────────
 carousel.addEventListener('scroll', () => { wrapScroll() }, { passive: true })

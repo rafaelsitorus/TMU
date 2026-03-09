@@ -10,34 +10,27 @@ const INTRO_CTA = 'Lihat apa yang telah kami capai.'
 
 // ─── Featured project ───────────────────────────────────────
 const FEATURED_LABEL = 'Featured Project'
-const FEATURED_TITLE = 'Gedung Perkantoran Jakarta Barat'
-const FEATURED_DESCRIPTION = 'Instalasi sistem mekanikal dan elektrikal lengkap untuk gedung perkantoran 12 lantai di kawasan bisnis Jakarta Barat.'
-const FEATURED_CLIENT = 'PT. Developer Indonesia'
-const FEATURED_YEAR = '2024'
-const FEATURED_VALUE = 'Rp 15 Miliar'
-const FEATURED_STATUS = 'Selesai'
-const FEATURED_IMAGE = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=500&fit=crop'
+const FEATURED_TITLE = 'Four Seasons Hotel Jakarta'
+const FEATURED_DESCRIPTION = 'Proyek Four Seasons Hotel Jakarta'
+const FEATURED_IMAGE = '/portofolio4.png'
 
 // ─── Project grid ───────────────────────────────────────────
 interface Project {
-  category: string
   title: string
   description: string
   image: string
 }
 
 const PROJECTS: Project[] = [
-  { category: 'Komersial · 2023', title: 'Mall Retail & Entertainment Center', description: 'Instalasi elektrikal dan sistem pendingin untuk pusat perbelanjaan modern di Jakarta.', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop' },
-  { category: 'Industri · 2023', title: 'Pabrik Manufaktur Cikarang', description: 'Instalasi panel distribusi dan sistem kelistrikan pabrik manufaktur skala besar.', image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&h=400&fit=crop' },
-  { category: 'Residensial · 2022', title: 'Apartemen Premium Alam Sutera', description: 'Sistem mekanikal elektrikal lengkap untuk tower apartemen 25 lantai.', image: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&h=400&fit=crop' },
-  { category: 'Energi · 2024', title: 'Solar Farm Karawang', description: 'Instalasi solar panel 2MW untuk kawasan industri di Karawang, Jawa Barat.', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop' },
+  { title: 'IPC (Pelabuhan Tanjung Priok)', description: 'Proyek  pada IPC (Pelabuhan Tanjung Priok), Jakarta.', image: '/portofolio2.png' },
+  { title: 'Universitas Terbuka (UT)', description: 'Proyek pada Universitas Terbuka (UT).', image: '/portofolio3.png' },
+  { title: 'Bandara Halim Perdana Kusuma', description: 'Proyek pada Bandara Halim Perdana Kusuma, Jakarta.', image: '/portofolio1.png' },
+  { title: 'Angkas Pura II', description: 'Proyek pada Angkas Pura II, Bandara Internasonal Soekarno-Hatta, Jakarta.', image: '/portofolio5.png' },
+  { title: 'Ritz Carlton Hotel', description: 'Proyek pada Ritz Carlton Hotel, Jakarta.', image: '/portofolio6.png' },
+  { title: 'Apartement Gading Mediterania', description: 'Proyek pada Apartement Gading Mediterania, Jakarta.', image: '/portofolio7.png' },
+  { title: 'Rumah Sakit Harapan Kita', description: 'Proyek pada Rumah Sakit Harapan Kita, Jakarta.', image: '/portofolio8.png' },
+  { title: 'RSUP Nasional DR Cipto Mangunkusomo', description: 'Proyek pada RSUP Nasional DR Cipto Mangunkusomo', image: '/portofolio9.png' },
 ]
-
-// ─── Testimonial ────────────────────────────────────────────
-const TESTIMONIAL_LABEL = 'Testimoni Klien'
-const TESTIMONIAL_QUOTE = '"Kerjasama dengan TMU sangat memuaskan. Tim mereka profesional, tepat waktu, dan hasil pekerjaannya berkualitas tinggi. Kami sangat merekomendasikan."'
-const TESTIMONIAL_AUTHOR = '— Project Manager'
-const TESTIMONIAL_COMPANY = 'PT. Developer Indonesia'
 
 // ─── CTA ────────────────────────────────────────────────────
 const CTA_HEADING = 'Punya proyek yang ingin dikerjakan?'
@@ -51,7 +44,6 @@ const projectsHTML = PROJECTS.map(p => `
            alt="${p.title}" class="w-full h-56 object-cover opacity-50">
       <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 p-6">
-        <span class="text-[10px] tracking-[0.15em] text-white/40 uppercase">${p.category}</span>
         <h4 class="font-medium text-white/90 mt-1 mb-2">${p.title}</h4>
         <p class="text-sm text-white/40 leading-relaxed">${p.description}</p>
       </div>
@@ -91,28 +83,8 @@ renderPage('Portfolio', PAGE_TITLE, `
     <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12">
       <span class="text-[10px] tracking-[0.2em] text-blue-400 uppercase font-medium">${FEATURED_LABEL}</span>
       <h3 class="text-2xl md:text-3xl font-light text-white/90 mt-2 mb-6">${FEATURED_TITLE}</h3>
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="max-w-2xl">
         <p class="text-sm text-white/50 leading-relaxed">${FEATURED_DESCRIPTION}</p>
-        <div class="space-y-3">
-          <div>
-            <span class="text-[10px] tracking-[0.15em] text-white/30 uppercase block">Klien</span>
-            <span class="text-sm text-white/60">${FEATURED_CLIENT}</span>
-          </div>
-          <div>
-            <span class="text-[10px] tracking-[0.15em] text-white/30 uppercase block">Tahun</span>
-            <span class="text-sm text-white/60">${FEATURED_YEAR}</span>
-          </div>
-        </div>
-        <div class="space-y-3">
-          <div>
-            <span class="text-[10px] tracking-[0.15em] text-white/30 uppercase block">Nilai Proyek</span>
-            <span class="text-sm text-white/60">${FEATURED_VALUE}</span>
-          </div>
-          <div>
-            <span class="text-[10px] tracking-[0.15em] text-white/30 uppercase block">Status</span>
-            <span class="text-sm text-green-400 font-medium">${FEATURED_STATUS}</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -123,24 +95,6 @@ renderPage('Portfolio', PAGE_TITLE, `
   <!-- Project Grid -->
   <div class="grid md:grid-cols-2 gap-5 md:gap-6 fade-section">
     ${projectsHTML}
-  </div>
-
-  <!-- Section Divider -->
-  <div class="section-divider my-4"></div>
-
-  <!-- Testimonial -->
-  <div class="py-8 md:py-12">
-    <div class="flex items-center gap-2 mb-8">
-      <span class="glow-dot text-blue-400"></span>
-      <span class="text-[11px] tracking-[0.2em] text-white/50 uppercase">${TESTIMONIAL_LABEL}</span>
-    </div>
-    <blockquote class="text-xl md:text-2xl font-light text-white/70 leading-relaxed mb-6">
-      ${TESTIMONIAL_QUOTE}
-    </blockquote>
-    <div>
-      <div class="text-sm text-white/50">${TESTIMONIAL_AUTHOR}</div>
-      <div class="text-[10px] tracking-[0.15em] text-white/25 uppercase mt-1">${TESTIMONIAL_COMPANY}</div>
-    </div>
   </div>
 
   <!-- Section Divider -->

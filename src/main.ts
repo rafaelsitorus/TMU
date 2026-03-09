@@ -1,4 +1,6 @@
 import './style.css'
+import { initThreeBackground } from './three-bg'
+import { initCursor } from './cursor'
 
 interface CardData {
   href: string
@@ -41,39 +43,105 @@ const allCardsHTML = repeated.map(buildCard).join('')
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="h-screen bg-black text-white flex flex-col overflow-hidden">
 
-    <!-- Logo & Tagline -->
-    <div class="flex flex-col items-center justify-center pt-10 md:pt-12 pb-6 md:pb-8 flex-shrink-0 z-10">
-      <a href="/" class="group mb-5">
-        <div class="w-14 h-14 border border-white/25 rounded-2xl flex items-center justify-center hover:border-white/50 transition-all duration-300 group-hover:scale-105">
-          <span class="text-white font-semibold text-base tracking-[0.2em]">TMU</span>
+    <!-- Navbar -->
+    <nav class="flex-shrink-0 z-20 px-5 md:px-8 py-5 md:py-6 flex items-center gap-4">
+
+      <!-- Logo -->
+      <a href="/" class="group flex items-center gap-3 flex-shrink-0">
+        <div class="w-11 h-11 border border-white/25 rounded-xl flex items-center justify-center group-hover:border-white/50 transition-all duration-300">
+          <span class="text-white font-semibold text-[11px] tracking-[0.2em]">TMU</span>
         </div>
+        <span class="hidden sm:block text-xs font-medium tracking-[0.18em] text-white/40 uppercase">PT. Todo Mitra Utama</span>
       </a>
-      <h1 class="text-xl md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/80 text-center px-4">
-        Konstruksi profesional untuk masa depan.
-      </h1>
-    </div>
 
-    <!-- Carousel -->
-    <div id="carousel" class="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
-      <div id="track" class="flex h-full items-center"> ${allCardsHTML}
+      <!-- Spacer: pushes nav links toward right -->
+      <div class="flex-1"></div>
+
+      <!-- Desktop nav links (biased right) -->
+      <div class="hidden md:flex items-center gap-1 mr-4">
+        <a href="/about.html"     class="nav-pill nav-pill-lg">About</a>
+        <a href="/services.html"  class="nav-pill nav-pill-lg">Our Services</a>
+        <a href="/product.html"   class="nav-pill nav-pill-lg">Product</a>
+        <a href="/portfolio.html" class="nav-pill nav-pill-lg">Portfolio</a>
       </div>
-    </div>
 
-    <!-- Bottom Bar (no border, seamless) -->
-    <div class="flex-shrink-0 z-10">
-      <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-white rounded-sm"></div>
-          <span class="text-[10px] md:text-xs font-medium tracking-[0.15em] text-white/50 uppercase">PT. TODO MITRA UTAMA</span>
+      <!-- Right: Contact + Mobile hamburger -->
+      <div class="flex items-center gap-3">
+        <a href="/contact.html" class="contact-pill hidden sm:inline-block px-6 py-2.5 rounded-full text-xs font-medium text-white/80 tracking-[0.2em] uppercase">
+          Contact Us
+        </a>
+        <button id="nav-open" class="md:hidden w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile drawer -->
+    <div id="nav-drawer" class="fixed inset-0 z-50 hidden md:hidden">
+      <div id="nav-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+      <div class="absolute right-0 inset-y-0 w-60 bg-black flex flex-col p-6 shadow-2xl border-l border-white/[0.07]">
+        <button id="nav-close" class="self-end mb-8 text-white/40 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        <div class="flex flex-col gap-1">
+          <a href="/about.html"     class="nav-pill block text-center">About</a>
+          <a href="/services.html"  class="nav-pill block text-center">Our Services</a>
+          <a href="/product.html"   class="nav-pill block text-center">Product</a>
+          <a href="/portfolio.html" class="nav-pill block text-center">Portfolio</a>
         </div>
-        <a href="/contact.html" class="px-5 md:px-6 py-2 md:py-2.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[11px] md:text-sm font-medium text-white transition-colors tracking-wider uppercase">
+        <a href="/contact.html" class="contact-pill mt-6 block text-center px-4 py-2.5 rounded-full text-[10px] font-medium tracking-[0.2em] uppercase text-white/80">
           Contact Us
         </a>
       </div>
     </div>
 
+    <!-- Tagline + Carousel wrapper -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- Tagline: centered in its own zone between navbar and carousel -->
+      <div class="flex-none flex items-center justify-center px-4" style="height: clamp(90px, 15vh, 140px);">
+        <h1 class="mt-16 text-lg md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/70 text-center">
+          Konstruksi profesional untuk masa depan.
+        </h1>
+      </div>
+
+      <!-- Carousel -->
+      <div id="carousel" class="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
+        <div id="track" class="flex h-full items-center"> ${allCardsHTML}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="flex-shrink-0 z-10">
+      <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center">
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-white rounded-sm"></div>
+          <span class="text-[10px] md:text-xs font-medium tracking-[0.15em] text-white/50 uppercase">PT. TODO MITRA UTAMA</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 `
+
+// ─── Mobile nav drawer ───────────────────────────────────────
+const navDrawer   = document.getElementById('nav-drawer')!
+const navOverlay  = document.getElementById('nav-overlay')!
+document.getElementById('nav-open')?.addEventListener('click', () => navDrawer.classList.remove('hidden'))
+document.getElementById('nav-close')?.addEventListener('click', () => navDrawer.classList.add('hidden'))
+navOverlay.addEventListener('click', () => navDrawer.classList.add('hidden'))
+
+// ─── Three.js wireframe background ──────────────────────────
+const mainDiv = document.querySelector<HTMLElement>('.h-screen')!
+initThreeBackground(mainDiv)
+
+// ─── Custom cursor ───────────────────────────────────────────
+initCursor()
 
 // ─── Layout: exactly 3 square cards with gaps, centered ────────
 const carousel = document.getElementById('carousel')!

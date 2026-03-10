@@ -63,7 +63,7 @@ const mobileCardsHTML = cards.map(buildMobileCard).join('')
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="bg-black text-white">
-  <div id="home-root" class="md:h-screen flex flex-col md:overflow-hidden relative">
+  <div id="home-root" class="flex flex-col relative">
 
     <!-- Navbar -->
     <nav class="flex-shrink-0 z-20 px-5 md:px-8 py-5 md:py-6 flex items-center gap-4">
@@ -142,15 +142,64 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </div>
 
+    <!-- ═══ Company Title Section ═══ -->
+    <section id="company-header" class="company-header-section">
+      <!-- Animated background elements -->
+      <div class="ch-bg-deco">
+        <span class="ch-orb ch-orb-1"></span>
+        <span class="ch-orb ch-orb-2"></span>
+        <span class="ch-orb ch-orb-3"></span>
+        <span class="ch-line ch-line-1"></span>
+        <span class="ch-line ch-line-2"></span>
+        <span class="ch-line ch-line-3"></span>
+        <span class="ch-grid"></span>
+      </div>
+
+      <div class="ch-content">
+        <!-- Decorative top accent -->
+        <div class="ch-top-accent">
+          <span class="ch-diamond"></span>
+          <span class="ch-accent-line"></span>
+          <span class="ch-diamond"></span>
+        </div>
+
+        <!-- Main heading -->
+        <h2 class="ch-title">
+          <span class="ch-title-pre">Established Excellence</span>
+          <span class="ch-title-main">PT. Todo Mitra Utama</span>
+          <span class="ch-title-sub">Mechanical &amp; Electrical Contractor</span>
+        </h2>
+
+        <!-- Glowing divider -->
+        <div class="ch-divider">
+          <span class="ch-divider-glow"></span>
+        </div>
+
+        <!-- Company description -->
+        <p class="ch-desc">
+          Membangun fondasi infrastruktur Indonesia melalui solusi mekanikal &amp; elektrikal yang inovatif, handal, dan bersertifikasi — sejak hari pertama hingga selamanya.
+        </p>
+
+        <!-- Badge row -->
+        <div class="ch-badges">
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.746 3.746 0 01-3.296 1.043A3.746 3.746 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
+            <span>Anggota AKLI</span>
+          </div>
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+            <span>Jakarta Barat</span>
+          </div>
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-5.1a1.77 1.77 0 010-2.5l5.1-5.1a1.77 1.77 0 012.5 0l5.1 5.1a1.77 1.77 0 010 2.5l-5.1 5.1a1.77 1.77 0 01-2.5 0zM12 9v2m0 4h.01"/></svg>
+            <span>15+ Tahun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tagline + Cards wrapper -->
     <div class="flex-1 flex flex-col md:overflow-hidden">
-
-      <!-- Tagline: centered in its own zone between navbar and carousel -->
-      <div class="flex-none flex items-center justify-center px-4" style="height: clamp(60px, 12vh, 140px);">
-        <h1 class="mt-6 md:mt-16 text-lg md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/70 text-center">
-          Konstruksi profesional untuk masa depan.
-        </h1>
-      </div>
 
       <!-- Mobile: vertical cards -->
       <div class="md:hidden px-4 pb-6 space-y-4">
@@ -158,7 +207,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
 
       <!-- Desktop: horizontal carousel -->
-      <div id="carousel" class="hidden md:block flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
+      <div id="carousel" class="hidden md:block overflow-x-auto overflow-y-hidden hide-scrollbar" style="height: 420px;">
         <div id="track" class="flex h-full items-center"> ${allCardsHTML}
         </div>
       </div>
@@ -751,9 +800,9 @@ function setTheme(mode: 'dark' | 'light') {
 
 // Restore saved theme
 const saved = localStorage.getItem('tmu-theme') as 'dark' | 'light' | null
-setTheme(saved || 'dark')
+setTheme(saved || 'light')
 
 themeBtn.addEventListener('click', () => {
-  const current = htmlEl.getAttribute('data-theme') || 'dark'
+  const current = htmlEl.getAttribute('data-theme') || 'light'
   setTheme(current === 'dark' ? 'light' : 'dark')
 })

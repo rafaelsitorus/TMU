@@ -267,9 +267,9 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     localStorage.setItem('tmu-theme', mode)
   }
   const saved = localStorage.getItem('tmu-theme') as 'dark' | 'light' | null
-  setTheme(saved || 'dark')
+  setTheme(saved || 'light')
   themeBtn.addEventListener('click', () => {
-    const current = htmlEl.getAttribute('data-theme') || 'dark'
+    const current = htmlEl.getAttribute('data-theme') || 'light'
     setTheme(current === 'dark' ? 'light' : 'dark')
   })
 }

@@ -5,8 +5,8 @@
   ],
   "exclude": [
     "/favicon.ico",
+    "/image.svg",
     "/*.png",
-    "/*.svg",
     "/*.jpg",
     "/*.jpeg",
     "/*.gif",

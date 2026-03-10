@@ -63,7 +63,7 @@ const mobileCardsHTML = cards.map(buildMobileCard).join('')
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="bg-black text-white">
-  <div id="home-root" class="md:h-screen flex flex-col md:overflow-hidden relative">
+  <div id="home-root" class="flex flex-col relative">
 
     <!-- Navbar -->
     <nav class="flex-shrink-0 z-20 px-5 md:px-8 py-5 md:py-6 flex items-center gap-4">
@@ -142,15 +142,52 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </div>
 
+    <!-- ═══ Company Title Section ═══ -->
+    <section id="company-header" class="company-header-section">
+      <!-- Animated background elements -->
+      <div class="ch-bg-deco">
+        <span class="ch-orb ch-orb-1"></span>
+        <span class="ch-orb ch-orb-2"></span>
+        <span class="ch-orb ch-orb-3"></span>
+        <span class="ch-line ch-line-1"></span>
+        <span class="ch-line ch-line-2"></span>
+        <span class="ch-line ch-line-3"></span>
+        <span class="ch-grid"></span>
+      </div>
+
+      <div class="ch-content">
+
+        <!-- Main heading -->
+        <h2 class="ch-title">
+          <span class="ch-title-main">PT. Todo Mitra Utama</span>
+          <span class="ch-title-sub">Electrical &amp; Mechanical Contractor</span>
+        </h2>
+
+        <!-- Glowing divider -->
+        <div class="ch-divider">
+          <span class="ch-divider-glow"></span>
+        </div>
+
+        <!-- Badge row -->
+        <div class="ch-badges">
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.746 3.746 0 01-3.296 1.043A3.746 3.746 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
+            <span>Anggota AKLI</span>
+          </div>
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+            <span>Jakarta Barat</span>
+          </div>
+          <div class="ch-badge">
+            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-5.1a1.77 1.77 0 010-2.5l5.1-5.1a1.77 1.77 0 012.5 0l5.1 5.1a1.77 1.77 0 010 2.5l-5.1 5.1a1.77 1.77 0 01-2.5 0zM12 9v2m0 4h.01"/></svg>
+            <span>15+ Tahun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tagline + Cards wrapper -->
     <div class="flex-1 flex flex-col md:overflow-hidden">
-
-      <!-- Tagline: centered in its own zone between navbar and carousel -->
-      <div class="flex-none flex items-center justify-center px-4" style="height: clamp(60px, 12vh, 140px);">
-        <h1 class="mt-6 md:mt-16 text-lg md:text-2xl lg:text-[1.75rem] font-light tracking-wide text-white/70 text-center">
-          Konstruksi profesional untuk masa depan.
-        </h1>
-      </div>
 
       <!-- Mobile: vertical cards -->
       <div class="md:hidden px-4 pb-6 space-y-4">
@@ -158,7 +195,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
 
       <!-- Desktop: horizontal carousel -->
-      <div id="carousel" class="hidden md:block flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar">
+      <div id="carousel" class="hidden md:block overflow-x-auto overflow-y-hidden hide-scrollbar" style="height: 420px;">
         <div id="track" class="flex h-full items-center"> ${allCardsHTML}
         </div>
       </div>
@@ -204,14 +241,123 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <span class="plx-bg-circle plx-bg-circle-1"></span>
           <span class="plx-bg-circle plx-bg-circle-2"></span>
         </div>
-        <div class="plx-inner plx-from-right">
+        <div class="plx-inner plx-from-right" style="max-width: 1200px; width: 100%;">
           <span class="plx-label">02</span>
           <h2 class="plx-heading">Our Specialty</h2>
-          <div class="plx-carousel" id="specialty-carousel"></div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            <!-- Main Card: Data Center (Spans full width) -->
+            <div class="group bg-[var(--nav-bg)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[var(--border-light)] hover:-translate-y-1 hover:shadow-2xl md:col-span-2 lg:col-span-3 flex flex-col md:flex-row">
+              <div class="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
+                <img src="/card1.png" alt="Data Center" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50"></div>
+              </div>
+              <div class="p-8 md:p-12 flex flex-col justify-center w-full md:w-3/5">
+                <h3 class="text-2xl md:text-3xl font-bold mb-4 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Data Center</h3>
+                <ul class="text-sm md:text-base text-[var(--text-muted)] leading-relaxed space-y-3">
+                  <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> MINISTRY OF FINANCE DATA CENTER DEVELOPMENT - 2024</li>
+                  <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> DATA CENTER GENSET PROCUREMENT – 2 "BADAN INFORMASI GEOSPASIAL"</li>
+                  <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> PHASE II DATA CENTER RENOVATION WORK - 1 LAMA IN A TYPICAL BUILDING IN THE BANK INDONESIA OFFICE COMPLEX (KOPERBI) JAKARTA</li>
+                  <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> DATA CENTER GENSET PROCUREMENT "BADAN INFORMASI GEOSPASIAL"</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Card: Fire Alarm System -->
+            <div class="group bg-[var(--nav-bg)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[var(--border-light)] hover:-translate-y-1 hover:shadow-xl flex flex-col h-full">
+              <div class="relative h-56 overflow-hidden">
+                <img src="/card2.png" alt="Fire Alarm System" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow">
+                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fire Alarm System</h3>
+                <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">Fire alarm systems and their components shall be inspected, maintained and tested.</p>
+                <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
+                  Read More 
+                  <span class="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card: Fabrication of Cable Tray & Lighting Pole -->
+            <div class="group bg-[var(--nav-bg)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[var(--border-light)] hover:-translate-y-1 hover:shadow-xl flex flex-col h-full">
+              <div class="relative h-56 overflow-hidden">
+                <img src="/card3.png" alt="Fabrication of Cable Tray & Lighting Pole" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow">
+                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fabrication of Cable Tray & Lighting Pole</h3>
+                <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">We have better product for Cable Tray & Lighting Pole.</p>
+                <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
+                  Read More 
+                  <span class="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card: Electrical & Mechanical -->
+            <div class="group bg-[var(--nav-bg)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[var(--border-light)] hover:-translate-y-1 hover:shadow-xl flex flex-col h-full">
+              <div class="relative h-56 overflow-hidden">
+                <img src="/card5.png" alt="Electrical & Mechanical" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow">
+                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Electrical & Mechanical</h3>
+                <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">Our mechanical and electrical services make buildings work better - more efficient and more sustainable.</p>
+                <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
+                  Read More 
+                  <span class="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card: Telecommunication System -->
+            <div class="group bg-[var(--nav-bg)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[var(--border-light)] hover:-translate-y-1 hover:shadow-xl flex flex-col h-full">
+              <div class="relative h-56 overflow-hidden">
+                <img src="/card6.png" alt="Telecommunication System" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow">
+                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Telecommunication System</h3>
+                <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">We offer clients an all-inclusive option for telecom installation needs.</p>
+                <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
+                  Read More 
+                  <span class="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
+          
+          </div>
+      </section>
+
+      <!-- 3. Certificates — align CENTER/FLEX -->
+      <section class="plx-section plx-accent-indigo plx-align-center" style="align-items: center; justify-content: center; text-align: center;">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1" style="background: rgba(99, 102, 241, 0.15);"></span>
+          <span class="plx-orb plx-orb-2" style="background: rgba(168, 85, 247, 0.1);"></span>
+          <span class="plx-dots"></span>
+          <span class="plx-bg-circle plx-bg-circle-1"></span>
+        </div>
+        <div class="plx-inner plx-from-bottom" style="max-width: 1000px; width: 100%;">
+          <h2 class="plx-heading">Our Certificates</h2>          
+          <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: stretch;">
+            <!-- Cert 1 -->
+            <div style="flex: 1 1 250px; max-width: 300px; background: var(--nav-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; transition: transform 0.3s ease, border-color 0.3s ease;" class="hover:border-white/30 hover:-translate-y-1">
+              <img src="/certificate1.png" alt="Sertifikat 1" style="width: 100%; height: auto; border-radius: 6px; object-fit: contain;">
+            </div>
+            <!-- Cert 2 -->
+            <div style="flex: 1 1 250px; max-width: 300px; background: var(--nav-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; transition: transform 0.3s ease, border-color 0.3s ease;" class="hover:border-white/30 hover:-translate-y-1">
+              <img src="/certificate2.png" alt="Sertifikat 2" style="width: 100%; height: auto; border-radius: 6px; object-fit: contain;">
+            </div>
+            <!-- Cert 3 -->
+            <div style="flex: 1 1 250px; max-width: 300px; background: var(--nav-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; transition: transform 0.3s ease, border-color 0.3s ease;" class="hover:border-white/30 hover:-translate-y-1">
+              <img src="/certificate3.png" alt="Sertifikat 3" style="width: 100%; height: auto; border-radius: 6px; object-fit: contain;">
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- 3. Our Commitment — align LEFT -->
+      <!-- 4. Our Commitment — align LEFT -->
       <section class="plx-section plx-accent-emerald plx-align-left">
         <div class="plx-deco">
           <span class="plx-orb plx-orb-1"></span>
@@ -227,7 +373,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <span class="plx-bg-circle plx-bg-circle-2"></span>
         </div>
         <div class="plx-inner plx-from-left">
-          <span class="plx-label">03</span>
+          <span class="plx-label">04</span>
           <h2 class="plx-heading">Our Commitment</h2>
           <div class="plx-stats">
             <div class="plx-stat">
@@ -266,7 +412,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <span class="plx-bg-circle plx-bg-circle-2"></span>
         </div>
         <div class="plx-inner plx-from-right">
-          <span class="plx-label">04</span>
+          <span class="plx-label">05</span>
           <h2 class="plx-heading">Why Choose Us</h2>
           <div class="plx-list">
             <div class="plx-list-item">
@@ -534,11 +680,16 @@ function initScroll() {
 }
 
 // Use both DOMContentLoaded-safety and load for Safari
-if (document.readyState === 'complete') {
-  requestAnimationFrame(initScroll)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initScroll()
+  })
 } else {
-  window.addEventListener('load', () => requestAnimationFrame(initScroll))
+  initScroll()
 }
+window.addEventListener('load', () => {
+  requestAnimationFrame(initScroll)
+})
 
 // Hover pause
 carousel.addEventListener('mouseenter', () => { isPaused = true })
@@ -751,9 +902,9 @@ function setTheme(mode: 'dark' | 'light') {
 
 // Restore saved theme
 const saved = localStorage.getItem('tmu-theme') as 'dark' | 'light' | null
-setTheme(saved || 'dark')
+setTheme(saved || 'light')
 
 themeBtn.addEventListener('click', () => {
-  const current = htmlEl.getAttribute('data-theme') || 'dark'
+  const current = htmlEl.getAttribute('data-theme') || 'light'
   setTheme(current === 'dark' ? 'light' : 'dark')
 })

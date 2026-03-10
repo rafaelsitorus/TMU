@@ -1,0 +1,7 @@
+{
+  "name": "tmu",
+  "compatibility_date": "2024-03-10",
+  "assets": {
+    "directory": "./dist"
+  }
+}

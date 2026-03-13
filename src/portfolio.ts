@@ -10,18 +10,18 @@ const INTRO_CTA = 'Lihat apa yang telah kami capai.'
 
 // ─── Featured project ───────────────────────────────────────
 const FEATURED_LABEL = 'Featured Project'
-const FEATURED_TITLE = 'Four Seasons Hotel Jakarta'
-const FEATURED_DESCRIPTION = 'Proyek Four Seasons Hotel Jakarta'
-const FEATURED_IMAGE = '/portofolio4.png'
+export const FEATURED_TITLE = 'Four Seasons Hotel Jakarta'
+export const FEATURED_DESCRIPTION = 'Proyek Four Seasons Hotel Jakarta'
+export const FEATURED_IMAGE = '/portofolio4.png'
 
 // ─── Project grid ───────────────────────────────────────────
-interface Project {
+export interface Project {
   title: string
   description: string
   image: string
 }
 
-const PROJECTS: Project[] = [
+export const PROJECTS: Project[] = [
   { title: 'IPC (Pelabuhan Tanjung Priok)', description: 'Proyek  pada IPC (Pelabuhan Tanjung Priok), Jakarta.', image: '/portofolio2.png' },
   { title: 'Universitas Terbuka (UT)', description: 'Proyek pada Universitas Terbuka (UT).', image: '/portofolio3.png' },
   { title: 'Bandara Halim Perdana Kusuma', description: 'Proyek pada Bandara Halim Perdana Kusuma, Jakarta.', image: '/portofolio1.png' },

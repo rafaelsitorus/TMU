@@ -60,6 +60,77 @@ const buildMobileCard = (c: CardData) => `
 `
 const mobileCardsHTML = cards.map(buildMobileCard).join('')
 
+const partnerImagesRow1 = [
+  '/partner1.png',
+  '/partner2.png',
+  '/partner3.png',
+  '/partner4.png',
+  '/partner5.png',
+];
+
+const partnerImagesRow2 = [
+  '/partner6.png',
+  '/partner7.png',
+  '/partner8.png',
+  '/partner9.png',
+];
+
+const projectImagesRow1 = [
+  '/project1.png',
+  '/project2.png',
+  '/project3.png',
+  '/project4.png',
+  '/project5.png',
+  '/project6.png'
+];
+
+const projectImagesRow2 = [
+  '/project7.png',
+  '/project8.png',
+  '/project9.png',
+  '/project10.png',
+  '/project11.png',
+  '/project12.png'
+];
+
+const projectImagesRow3 = [
+  '/partner10.png',
+  '/project13.png',
+  '/project14.png',
+  '/project15.png',
+  '/project16.png'
+];
+
+const buildMarqueeItem = (imgSrc: string) => `
+  <img src="${imgSrc}" alt="Partner" class="h-10 md:h-14 hover:scale-110 transition-transform duration-300 object-contain mx-3 md:mx-6">
+`;
+
+const buildMarqueeHtml = (images: string[], reverse: boolean = false) => {
+  // Ensure we have enough items so there is never an "empty section" gap
+  let repeatedImages = [...images];
+  while (repeatedImages.length < 24) {
+    repeatedImages = repeatedImages.concat(images);
+  }
+
+  const items = repeatedImages.map(buildMarqueeItem).join('');
+  const animationClass = reverse ? 'animate-marquee-reverse' : 'animate-marquee';
+  
+  return `
+    <div class="relative w-full overflow-hidden pause-marquee mask-edges py-3 md:py-4 bg-[var(--nav-bg)] rounded-2xl border border-[var(--border-subtle)] mb-3 md:mb-4 shadow-sm hover:border-[var(--border-light)] transition-colors">
+      <div class="flex w-max ${animationClass} hover:[animation-play-state:paused] items-center">
+        <!-- First Set -->
+        <div class="flex items-center justify-around min-w-max">
+          ${items}
+        </div>
+        <!-- Second Set (Duplicate for smooth scroll) -->
+        <div class="flex items-center justify-around min-w-max">
+          ${items}
+        </div>
+      </div>
+    </div>
+  `;
+};
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="home-page bg-white text-slate-900">
   <div id="home-root" class="flex flex-col relative">
@@ -69,9 +140,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
       <!-- Logo -->
       <a href="/" class="group flex items-center gap-3 flex-shrink-0">
-        <div class="w-11 h-11 border border-white/40 rounded-xl flex items-center justify-center group-hover:border-white/70 transition-all duration-300">
-          <span class="text-white font-semibold text-[11px] tracking-[0.2em]">TMU</span>
-        </div>
+        <img src="/Screenshot 2026-03-14 at 00.34.13.jpg" alt="TMU Logo" class="h-10 w-auto object-contain">
         <span class="hidden sm:block text-xs font-medium tracking-[0.18em] text-white/80 uppercase">PT. Todo Mitra Utama</span>
       </a>
 
@@ -115,7 +184,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <!-- Mobile drawer -->
     <div id="nav-drawer" class="fixed inset-0 z-50 hidden md:hidden">
       <div id="nav-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-      <div class="absolute right-0 inset-y-0 w-60 bg-[#0b4ea2] flex flex-col p-6 shadow-2xl border-l border-white/20">
+      <div class="absolute right-0 inset-y-0 w-60 bg-[#0000ae] flex flex-col p-6 shadow-2xl border-l border-white/20">
         <button id="nav-close" class="self-end mb-8 text-white/40 hover:text-white transition-colors">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
@@ -155,11 +224,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
 
       <div class="ch-content">
-
         <!-- Main heading -->
-        <h2 class="ch-title">
-          <span class="ch-title-main">PT. Todo Mitra Utama</span>
-          <span class="ch-title-sub">Electrical &amp; Mechanical Contractor</span>
+        <h2 class="ch-title flex flex-col items-center">
+          <img src="/64222185168.png" alt="PT Todo Mitra Utama" class="h-24 md:h-32 w-auto object-contain mb-2">
+          <span class="ch-title-sub">Electrical & Mechanical Contractor</span>
+          <span class="mt-4 md:mt-6 text-sm md:text-base text-[var(--text-muted)] font-normal tracking-wide text-center" style="text-transform: none; letter-spacing: normal; font-size: clamp(0.8rem, 1.8vw, 1.5rem);">
+            Your Solution For Your <span id="infra-animated-text" class="text-blue-500 font-bold transition-opacity duration-500 inline-block min-w-[100px]" style="opacity: 1;">Data Center</span> Infrastructure
+          </span>
         </h2>
 
         <!-- Glowing divider -->
@@ -170,16 +241,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <!-- Badge row -->
         <div class="ch-badges">
           <div class="ch-badge">
-            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.746 3.746 0 01-3.296 1.043A3.746 3.746 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
-            <span>Anggota AKLI</span>
-          </div>
-          <div class="ch-badge">
             <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
             <span>Jakarta Barat</span>
           </div>
           <div class="ch-badge">
             <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-5.1a1.77 1.77 0 010-2.5l5.1-5.1a1.77 1.77 0 012.5 0l5.1 5.1a1.77 1.77 0 010 2.5l-5.1 5.1a1.77 1.77 0 01-2.5 0zM12 9v2m0 4h.01"/></svg>
-            <span>15+ Tahun</span>
+            <span>25+ Tahun</span>
           </div>
         </div>
       </div>
@@ -378,6 +445,23 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
       </section>
 
+      <!-- 4.5. Our Partners — align CENTER -->
+      <section class="plx-section plx-accent-cyan plx-align-center overflow-hidden" style="align-items: center; justify-content: center; text-align: center;">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1" style="background: rgba(6, 182, 212, 0.1);"></span>
+          <span class="plx-orb plx-orb-2" style="background: rgba(59, 130, 246, 0.1);"></span>
+          <span class="plx-bg-line plx-bg-line-1"></span>
+        </div>
+        <div class="plx-inner plx-from-bottom" style="max-width: 1200px; width: 100%;">
+          <h2 class="plx-heading mb-8 md:mb-12">Our Partners and Projects</h2>
+          ${buildMarqueeHtml(projectImagesRow3, false)}
+          ${buildMarqueeHtml(partnerImagesRow1, false)}
+          ${buildMarqueeHtml(partnerImagesRow2, true)}
+          ${buildMarqueeHtml(projectImagesRow1, false)}
+          ${buildMarqueeHtml(projectImagesRow2, true)}
+        </div>
+      </section>
+
       <!-- 5. Let's Build Together — from LEFT -->
       <section class="plx-section plx-accent-warm home-plain-section home-tail-section" data-point="06">
         <div class="plx-deco">
@@ -395,7 +479,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div><!-- end parallax sections -->
 
     <!-- Footer -->
-    <footer class="z-10 bg-[#0b4ea2] border-t border-white/20">
+    <footer class="z-10 bg-[#0000ae] border-t border-white/20">
       <div class="max-w-7xl mx-auto px-6 md:px-10 py-14 md:py-20">
 
         <!-- Top row -->
@@ -403,9 +487,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
           <!-- Brand -->
           <div class="md:col-span-1">
-            <div class="w-12 h-12 border border-white/20 rounded-xl flex items-center justify-center mb-5">
-              <span class="text-white font-semibold text-[11px] tracking-[0.25em]">TMU</span>
-            </div>
+            <img src="/Screenshot 2026-03-14 at 00.34.13.jpg" alt="TMU Logo" class="h-12 w-auto object-contain mb-5">
             <p class="text-sm text-white/40 leading-relaxed mb-4">Konstruksi mekanikal & elektrikal profesional untuk Indonesia yang lebih baik.</p>
             <span class="text-[10px] tracking-[0.15em] text-white/25 uppercase">Anggota AKLI</span>
           </div>
@@ -531,7 +613,8 @@ function sizeCards() {
   const available = viewW - SIDE_PAD * 2
   const cardW = Math.floor((available - GAP * 2) / 3) // 3 visible, 2 gaps between them
   const cardMin = 200
-  const w = Math.max(cardW, cardMin)
+  const maxH = carousel.clientHeight - 16 // cap card size so it never exceeds container height
+  const w = Math.min(Math.max(cardW, cardMin), maxH)
 
   track.style.gap = `${GAP}px`
   track.style.paddingLeft = `${SIDE_PAD}px`
@@ -835,3 +918,18 @@ setTimeout(initTiltCards, 200)
 
 // Keep home page in light mode for clean white background.
 document.documentElement.setAttribute('data-theme', 'light')
+
+// ─── Animated Infrastructure Text ──────────────────────────────
+const animatedInfraText = document.getElementById('infra-animated-text');
+if (animatedInfraText) {
+  const infraWords = ['Data Center', 'Office', 'Hospital'];
+  let infraIndex = 0;
+  setInterval(() => {
+    animatedInfraText.style.opacity = '0'; // Fade out
+    setTimeout(() => {
+      infraIndex = (infraIndex + 1) % infraWords.length;
+      animatedInfraText.textContent = infraWords[infraIndex];
+      animatedInfraText.style.opacity = '1'; // Fade in
+    }, 500); // Wait for fade out to complete
+  }, 3000); // Change word every 3 seconds
+}

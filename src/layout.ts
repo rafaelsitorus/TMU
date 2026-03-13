@@ -29,9 +29,9 @@ function buildProductTree(isActive: boolean): string {
   `).join('')
 
   return `<div class="block mb-7 transition-opacity duration-300 ${opClass}">
-    <button class="sidebar-product-toggle flex items-center gap-2 mb-1 w-full text-left">
+    <button class="sidebar-product-toggle flex items-center gap-2 mb-1 w-full text-left text-white">
       ${isActive ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
-      <span class="text-[11px] font-medium tracking-[0.2em] uppercase">Product</span>
+      <span class="text-[11px] font-medium tracking-[0.2em] uppercase text-white">Product</span>
       <svg class="w-3 h-3 ml-auto opacity-40 transition-transform duration-200 product-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
     </button>
     <p class="text-[10px] tracking-wider text-white/40 uppercase leading-relaxed ${isActive ? 'pl-3.5' : ''}">Produk berkualitas tinggi.</p>
@@ -70,7 +70,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
     return `<a href="${n.href}" class="block mb-7 transition-opacity duration-300 ${a ? 'opacity-100' : 'opacity-30 hover:opacity-60'}">
       <div class="flex items-center gap-2 mb-1">
         ${a ? '<span class="w-1.5 h-1.5 bg-white rounded-sm block flex-shrink-0"></span>' : ''}
-        <span class="text-[11px] font-medium tracking-[0.2em] uppercase">${n.label}</span>
+        <span class="text-[11px] font-medium tracking-[0.2em] uppercase text-white">${n.label}</span>
       </div>
       <p class="text-[10px] tracking-wider text-white/40 uppercase leading-relaxed ${a ? 'pl-3.5' : ''}">${n.desc}</p>
     </a>`
@@ -95,11 +95,9 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
 <div class="min-h-screen bg-white text-white">
 
   <!-- ── Desktop sidebar ── -->
-  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-[#0b4ea2] border-r border-white/20 px-8 py-8 overflow-y-hidden">
+  <aside class="hidden lg:flex flex-col fixed inset-y-0 left-0 w-80 xl:w-[360px] z-20 bg-[#0000ae] border-r border-white/20 px-8 py-8 overflow-y-hidden">
     <a href="/" class="mb-10 inline-flex">
-      <div class="w-11 h-11 border border-white/20 rounded-xl flex items-center justify-center hover:border-white/40 transition-colors">
-        <span class="text-white font-semibold text-[11px] tracking-[0.25em]">TMU</span>
-      </div>
+      <img src="/Screenshot 2026-03-14 at 00.34.13.jpg" alt="TMU Logo" class="h-11 w-auto object-contain">
     </a>
 
     <div class="mb-8">
@@ -121,12 +119,10 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
   </aside>
 
   <!-- ── Mobile header ── -->
-  <header class="lg:hidden sticky top-0 z-30 bg-[#0b4ea2] border-b border-white/20">
+  <header class="lg:hidden sticky top-0 z-30 bg-[#0000ae] border-b border-white/20">
     <div class="flex items-center justify-between px-4 py-3">
       <a href="/" class="flex items-center gap-3">
-        <div class="w-9 h-9 border border-white/20 rounded-lg flex items-center justify-center">
-          <span class="text-white font-semibold text-[10px] tracking-[0.2em]">TMU</span>
-        </div>
+        <img src="/Screenshot 2026-03-14 at 00.34.13.jpg" alt="TMU Logo" class="h-8 w-auto object-contain">
         <span class="text-[10px] font-medium tracking-[0.15em] text-white/50 uppercase">${activeLabel}</span>
       </a>
       <button id="mob-btn" class="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white transition-colors">
@@ -140,7 +136,7 @@ export function renderPage(activeLabel: string, pageTitle: string, content: stri
   <!-- ── Mobile drawer ── -->
   <div id="mob-drawer" class="fixed inset-0 z-40 hidden lg:hidden">
     <div id="mob-overlay" class="absolute inset-0 bg-black/70"></div>
-    <div class="absolute right-0 inset-y-0 w-64 bg-[#0b4ea2] p-6 flex flex-col shadow-2xl border-l border-white/20">
+    <div class="absolute right-0 inset-y-0 w-64 bg-[#0000ae] p-6 flex flex-col shadow-2xl border-l border-white/20">
       <button id="mob-close" class="self-end mb-6 text-white/50 hover:text-white transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>

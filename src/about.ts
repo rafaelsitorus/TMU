@@ -3,18 +3,18 @@ import { renderPage } from './layout'
 // ─── Editable text constants ────────────────────────────────
 const PAGE_TITLE = 'Mengenal perusahaan kami'
 
-const INTRO_HEADING = 'Membangun masa depan konstruksi Indonesia.'
-const INTRO_PARAGRAPH_1 = 'PT. Todo Mitra Utama adalah perusahaan konstruksi yang bergerak di bidang mekanikal dan elektrikal. Berkantor pusat di Jakarta Barat, kami telah melayani berbagai proyek komersial dan industri dengan standar kualitas tertinggi.'
+export const INTRO_HEADING = 'Membangun masa depan konstruksi Indonesia.'
+export const INTRO_PARAGRAPH_1 = 'PT. Todo Mitra Utama adalah perusahaan konstruksi yang bergerak di bidang mekanikal dan elektrikal. Berkantor pusat di Jakarta Barat, kami telah melayani berbagai proyek komersial dan industri dengan standar kualitas tertinggi.'
 const INTRO_PARAGRAPH_2 = 'Sebagai anggota AKLI (Asosiasi Kontraktor Listrik dan Mekanikal Indonesia), kami berkomitmen untuk memberikan layanan profesional dan terpercaya.'
 const INTRO_PARAGRAPH_3 = 'Kami percaya bahwa infrastruktur kelistrikan yang handal adalah fondasi bagi kemajuan. Setiap proyek yang kami kerjakan mencerminkan dedikasi kami terhadap kualitas dan keselamatan.'
 const INTRO_CTA = 'Mulai membangun bersama kami.'
 
-const VISION_HEADING = 'Menjadi mitra konstruksi terpercaya di Indonesia.'
-const VISION_DESCRIPTION = 'Kami berkomitmen untuk menjadi perusahaan konstruksi mekanikal dan elektrikal terdepan yang mengutamakan inovasi, kualitas, dan kepuasan pelanggan dalam setiap proyek.'
+export const VISION_HEADING = 'Menjadi mitra konstruksi terpercaya di Indonesia.'
+export const VISION_DESCRIPTION = 'Kami berkomitmen untuk menjadi perusahaan konstruksi mekanikal dan elektrikal terdepan yang mengutamakan inovasi, kualitas, dan kepuasan pelanggan dalam setiap proyek.'
 const VISION_VALUES = ['Inovasi', 'Kualitas', 'Keselamatan', 'Integritas']
 
 const STATS_LABEL = 'Pencapaian'
-const STATS = [
+export const STATS = [
   { value: '50+', label: 'Proyek Selesai' },
   { value: '15+', label: 'Tahun Pengalaman' },
   { value: '30+', label: 'Tenaga Ahli' },

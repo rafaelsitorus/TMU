@@ -12,7 +12,7 @@ const HERO_IMAGE = 'https://images.unsplash.com/photo-1581094794329-c8112a89af12
 
 const SERVICES_LABEL = 'Layanan Kami'
 
-interface ServiceItem {
+export interface ServiceItem {
   name: string
   description: string
   colorBg: string
@@ -22,7 +22,7 @@ interface ServiceItem {
   iconPath2?: string  // optional second path (e.g. gear icon)
 }
 
-const SERVICES: ServiceItem[] = [
+export const SERVICES: ServiceItem[] = [
   {
     name: 'Instalasi Mekanikal & Elektrikal',
     description: 'Pemasangan sistem kelistrikan, HVAC, plumbing, dan fire protection untuk gedung komersial dan industri.',

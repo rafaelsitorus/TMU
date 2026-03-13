@@ -2,6 +2,9 @@ import './style.css'
 import { initThreeBackground } from './three-bg'
 import { initCursor } from './cursor'
 import { productCategories, brandHref } from './product-data'
+import { INTRO_PARAGRAPH_1, STATS } from './about'
+import { SERVICES } from './services'
+import { PROJECTS } from './portfolio'
 
 interface CardData {
   href: string
@@ -60,6 +63,78 @@ const buildMobileCard = (c: CardData) => `
   </a>
 `
 const mobileCardsHTML = cards.map(buildMobileCard).join('')
+// Initialize Lucide icons
+
+
+const partnerImagesRow1 = [
+  '/partner1.png',
+  '/partner2.png',
+  '/partner3.png',
+  '/partner4.png',
+  '/partner5.png',
+];
+
+const partnerImagesRow2 = [
+  '/partner6.png',
+  '/partner7.png',
+  '/partner8.png',
+  '/partner9.png',
+];
+
+const projectImagesRow1 = [
+  '/project1.png',
+  '/project2.png',
+  '/project3.png',
+  '/project4.png',
+  '/project5.png',
+  '/project6.png'
+];
+
+const projectImagesRow2 = [
+  '/project7.png',
+  '/project8.png',
+  '/project9.png',
+  '/project10.png',
+  '/project11.png',
+  '/project12.png'
+];
+
+const projectImagesRow3 = [
+  '/partner10.png',
+  '/project13.png',
+  '/project14.png',
+  '/project15.png'
+];
+
+const buildMarqueeItem = (imgSrc: string) => `
+  <img src="${imgSrc}" alt="Partner" class="h-10 md:h-14 hover:scale-110 transition-transform duration-300 object-contain mx-3 md:mx-6">
+`;
+
+const buildMarqueeHtml = (images: string[], reverse: boolean = false) => {
+  // Ensure we have enough items so there is never an "empty section" gap
+  let repeatedImages = [...images];
+  while (repeatedImages.length < 24) {
+    repeatedImages = repeatedImages.concat(images);
+  }
+
+  const items = repeatedImages.map(buildMarqueeItem).join('');
+  const animationClass = reverse ? 'animate-marquee-reverse' : 'animate-marquee';
+  
+  return `
+    <div class="relative w-full overflow-hidden pause-marquee mask-edges py-3 md:py-4 bg-[var(--nav-bg)] rounded-2xl border border-[var(--border-subtle)] mb-3 md:mb-4 shadow-sm hover:border-[var(--border-light)] transition-colors">
+      <div class="flex w-max ${animationClass} hover:[animation-play-state:paused] items-center">
+        <!-- First Set -->
+        <div class="flex items-center justify-around min-w-max">
+          ${items}
+        </div>
+        <!-- Second Set (Duplicate for smooth scroll) -->
+        <div class="flex items-center justify-around min-w-max">
+          ${items}
+        </div>
+      </div>
+    </div>
+  `;
+};
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="bg-black text-white">
@@ -143,24 +218,16 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
 
     <!-- ═══ Company Title Section ═══ -->
-    <section id="company-header" class="company-header-section">
-      <!-- Animated background elements -->
-      <div class="ch-bg-deco">
-        <span class="ch-orb ch-orb-1"></span>
-        <span class="ch-orb ch-orb-2"></span>
-        <span class="ch-orb ch-orb-3"></span>
-        <span class="ch-line ch-line-1"></span>
-        <span class="ch-line ch-line-2"></span>
-        <span class="ch-line ch-line-3"></span>
-        <span class="ch-grid"></span>
-      </div>
+    <section id="company-header" class="company-header-section mt-12 md:mt-24">
 
       <div class="ch-content">
-
         <!-- Main heading -->
-        <h2 class="ch-title">
+        <h2 class="ch-title flex flex-col items-center">
           <span class="ch-title-main">PT. Todo Mitra Utama</span>
-          <span class="ch-title-sub">Electrical &amp; Mechanical Contractor</span>
+          <span class="ch-title-sub">Electrical & Mechanical Contractor</span>
+          <span class="mt-4 md:mt-6 text-sm md:text-base text-[var(--text-muted)] font-normal tracking-wide text-center" style="text-transform: none; letter-spacing: normal; font-size: clamp(0.8rem, 1.8vw, 1.5rem);">
+            Your Solution For Your <span id="infra-animated-text" class="text-blue-500 font-bold transition-opacity duration-500 inline-block min-w-[100px]" style="opacity: 1;">Data Center</span> Infrastructure
+          </span>
         </h2>
 
         <!-- Glowing divider -->
@@ -171,16 +238,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <!-- Badge row -->
         <div class="ch-badges">
           <div class="ch-badge">
-            <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.746 3.746 0 01-3.296 1.043A3.746 3.746 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
-            <span>Anggota AKLI</span>
-          </div>
-          <div class="ch-badge">
             <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
             <span>Jakarta Barat</span>
           </div>
           <div class="ch-badge">
             <svg class="ch-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-5.1a1.77 1.77 0 010-2.5l5.1-5.1a1.77 1.77 0 012.5 0l5.1 5.1a1.77 1.77 0 010 2.5l-5.1 5.1a1.77 1.77 0 01-2.5 0zM12 9v2m0 4h.01"/></svg>
-            <span>15+ Tahun</span>
+            <span>25+ Tahun</span>
           </div>
         </div>
       </div>
@@ -223,7 +286,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="plx-inner plx-from-left">
           <span class="plx-label">01</span>
           <h2 class="plx-heading">Welcome to Our Site</h2>
-          <p class="plx-text">PT. Todo Mitra Utama adalah perusahaan konstruksi yang bergerak di bidang mekanikal dan elektrikal. Berkantor pusat di Jakarta Barat, kami adalah anggota resmi AKLI (Asosiasi Kontraktor Listrik dan Mekanikal Indonesia) yang telah berpengalaman menangani berbagai proyek komersial dan industri berskala nasional.</p>
+          <p class="plx-text">${INTRO_PARAGRAPH_1}</p>
         </div>
       </section>
 
@@ -253,7 +316,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50"></div>
               </div>
               <div class="p-8 md:p-12 flex flex-col justify-center w-full md:w-3/5">
-                <h3 class="text-2xl md:text-3xl font-bold mb-4 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Data Center</h3>
+                <h3 class="text-2xl md:text-3xl font-light mb-4 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Data Center</h3>
                 <ul class="text-sm md:text-base text-[var(--text-muted)] leading-relaxed space-y-3">
                   <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> MINISTRY OF FINANCE DATA CENTER DEVELOPMENT - 2024</li>
                   <li class="flex items-start gap-3"><span class="text-blue-500 mt-1">✦</span> DATA CENTER GENSET PROCUREMENT – 2 "BADAN INFORMASI GEOSPASIAL"</li>
@@ -270,7 +333,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div class="p-8 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fire Alarm System</h3>
+                <h3 class="text-xl font-light mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fire Alarm System</h3>
                 <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">Fire alarm systems and their components shall be inspected, maintained and tested.</p>
                 <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
                   Read More 
@@ -286,7 +349,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div class="p-8 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fabrication of Cable Tray & Lighting Pole</h3>
+                <h3 class="text-xl font-light mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Fabrication of Cable Tray & Lighting Pole</h3>
                 <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">We have better product for Cable Tray & Lighting Pole.</p>
                 <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
                   Read More 
@@ -302,7 +365,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div class="p-8 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Electrical & Mechanical</h3>
+                <h3 class="text-xl font-light mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Electrical & Mechanical</h3>
                 <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">Our mechanical and electrical services make buildings work better - more efficient and more sustainable.</p>
                 <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
                   Read More 
@@ -318,7 +381,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
               <div class="p-8 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Telecommunication System</h3>
+                <h3 class="text-xl font-light mb-3 text-[var(--text-primary)] group-hover:text-blue-500 transition-colors">Telecommunication System</h3>
                 <p class="text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-grow">We offer clients an all-inclusive option for telecom installation needs.</p>
                 <a href="/services.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 uppercase tracking-wider w-fit group/btn">
                   Read More 
@@ -357,6 +420,23 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
       </section>
 
+      <!-- 3.5. Our Partners — align CENTER -->
+      <section class="plx-section plx-accent-cyan plx-align-center overflow-hidden" style="align-items: center; justify-content: center; text-align: center;">
+        <div class="plx-deco">
+          <span class="plx-orb plx-orb-1" style="background: rgba(6, 182, 212, 0.1);"></span>
+          <span class="plx-orb plx-orb-2" style="background: rgba(59, 130, 246, 0.1);"></span>
+          <span class="plx-bg-line plx-bg-line-1"></span>
+        </div>
+        <div class="plx-inner plx-from-bottom" style="max-width: 1200px; width: 100%;">
+          <h2 class="plx-heading mb-8 md:mb-12">Our Partners and Projects</h2>
+          ${buildMarqueeHtml(projectImagesRow3, false)}
+          ${buildMarqueeHtml(partnerImagesRow1, false)}
+          ${buildMarqueeHtml(partnerImagesRow2, true)}
+          ${buildMarqueeHtml(projectImagesRow1, false)}
+          ${buildMarqueeHtml(projectImagesRow2, true)}
+        </div>
+      </section>
+
       <!-- 4. Our Commitment — align LEFT -->
       <section class="plx-section plx-accent-emerald plx-align-left">
         <div class="plx-deco">
@@ -376,22 +456,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <span class="plx-label">04</span>
           <h2 class="plx-heading">Our Commitment</h2>
           <div class="plx-stats">
-            <div class="plx-stat">
-              <span class="plx-stat-num">50+</span>
-              <span class="plx-stat-label">Proyek Selesai</span>
-            </div>
-            <div class="plx-stat">
-              <span class="plx-stat-num">15+</span>
-              <span class="plx-stat-label">Tahun Pengalaman</span>
-            </div>
-            <div class="plx-stat">
-              <span class="plx-stat-num">30+</span>
-              <span class="plx-stat-label">Tenaga Ahli</span>
-            </div>
-            <div class="plx-stat">
-              <span class="plx-stat-num">100%</span>
-              <span class="plx-stat-label">Kepuasan Klien</span>
-            </div>
+            ${STATS.map(s => `
+              <div class="plx-stat">
+                <span class="plx-stat-num">${s.value}</span>
+                <span class="plx-stat-label">${s.label}</span>
+              </div>
+            `).join('')}
           </div>
           <p class="plx-text mt-6">Kami berkomitmen terhadap kualitas, keselamatan kerja, dan ketepatan waktu dalam setiap proyek. Standar ISO dan prosedur K3 kami terapkan di seluruh lini operasional.</p>
         </div>
@@ -750,15 +820,69 @@ document.querySelectorAll('.plx-from-left, .plx-from-right').forEach(el => {
   plxObserver.observe(el)
 })
 
+// ─── Drag to scroll Marquees ──────────────────────────────────
+const marquees = document.querySelectorAll('.pause-marquee');
+marquees.forEach(marquee => {
+  let isDown = false;
+  let startX: number;
+  let scrollLeft: number;
+
+  const startDrag = (e: Event) => {
+    isDown = true;
+    marquee.classList.add('is-dragging');
+    
+    // Get pageX accounting for mouse vs touch
+    let pageX = 0;
+    if (e.type === 'mousedown') {
+      pageX = (e as MouseEvent).pageX;
+      e.preventDefault(); // Prevent native image drag
+    } else if (e.type === 'touchstart') {
+      pageX = (e as TouchEvent).touches[0].pageX;
+    }
+    
+    startX = pageX - (marquee as HTMLElement).offsetLeft;
+    scrollLeft = marquee.scrollLeft;
+  };
+
+  const endDrag = () => {
+    isDown = false;
+    marquee.classList.remove('is-dragging');
+  };
+
+  const moveDrag = (e: Event) => {
+    if (!isDown) return;
+    
+    let pageX = 0;
+    if (e.type === 'mousemove') {
+      pageX = (e as MouseEvent).pageX;
+      e.preventDefault();
+    } else if (e.type === 'touchmove') {
+      pageX = (e as TouchEvent).touches[0].pageX;
+      if (e.cancelable) e.preventDefault(); 
+    }
+
+    const x = pageX - (marquee as HTMLElement).offsetLeft;
+    const walk = (x - startX) * 2; // scroll speed multiplier
+    marquee.scrollLeft = scrollLeft - walk;
+  };
+
+  marquee.addEventListener('mousedown', startDrag);
+  marquee.addEventListener('mouseleave', endDrag);
+  marquee.addEventListener('mouseup', endDrag);
+  marquee.addEventListener('mousemove', moveDrag);
+  
+  marquee.addEventListener('touchstart', startDrag, { passive: true });
+  marquee.addEventListener('touchend', endDrag);
+  marquee.addEventListener('touchmove', moveDrag, { passive: false });
+});
+
 // ─── Specialty carousel: build cards + infinite scroll ──────
-const specData = [
-  { icon: '⚡', title: 'Electrical & Mechanical Installation', desc: 'Instalasi sistem kelistrikan dan mekanikal untuk gedung komersial, pabrik, dan fasilitas industri.', color: '#f59e0b' },
-  { icon: '📡', title: 'Telecommunication System', desc: 'Instalasi jaringan telekomunikasi, fiber optic, dan sistem komunikasi terintegrasi.', color: '#3b82f6' },
-  { icon: '🔊', title: 'Sound System', desc: 'Sistem audio profesional untuk gedung, ruang konferensi, dan area publik.', color: '#a855f7' },
-  { icon: '🔥', title: 'Fire Alarm System', desc: 'Instalasi sistem deteksi dan alarm kebakaran sesuai standar keselamatan nasional.', color: '#ef4444' },
-  { icon: '🔩', title: 'Cable Tray & Lighting Pole', desc: 'Fabrikasi dan pemasangan cable tray, rak kabel, serta tiang penerangan.', color: '#10b981' },
-  { icon: '📦', title: 'Supply of Electric Materials', desc: 'Penyediaan material listrik berkualitas dari brand terpercaya nasional dan internasional.', color: '#f97316' },
-]
+const specData = SERVICES.map(s => ({
+  icon: s.iconPath.includes('M13') ? '⚡' : s.iconPath.includes('M19') ? '📡' : s.iconPath.includes('M10') ? '🔊' : '🔥', // Simple icons based on path
+  title: s.name,
+  desc: s.description,
+  color: s.colorText.includes('blue') ? '#3b82f6' : s.colorText.includes('amber') ? '#f59e0b' : s.colorText.includes('green') ? '#10b981' : '#a855f7'
+}))
 
 function buildSpecCard(d: typeof specData[0], idx: number) {
   return `<div class="plx-tilt-card" data-index="${idx}" style="--card-color:${d.color}">
@@ -908,3 +1032,18 @@ themeBtn.addEventListener('click', () => {
   const current = htmlEl.getAttribute('data-theme') || 'light'
   setTheme(current === 'dark' ? 'light' : 'dark')
 })
+
+// ─── Animated Infrastructure Text ──────────────────────────────
+const animatedInfraText = document.getElementById('infra-animated-text');
+if (animatedInfraText) {
+  const infraWords = ['Data Center', 'Office', 'Hospital'];
+  let infraIndex = 0;
+  setInterval(() => {
+    animatedInfraText.style.opacity = '0'; // Fade out
+    setTimeout(() => {
+      infraIndex = (infraIndex + 1) % infraWords.length;
+      animatedInfraText.textContent = infraWords[infraIndex];
+      animatedInfraText.style.opacity = '1'; // Fade in
+    }, 500); // Wait for fade out to complete
+  }, 3000); // Change word every 3 seconds
+}

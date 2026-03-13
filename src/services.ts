@@ -51,6 +51,7 @@ const SERVICES: ServiceItem[] = [
 ]
 
 const PROCESS_LABEL = 'Proses Kerja'
+const WORK_DOCS_LABEL = 'Dokumentasi Proses'
 
 interface ProcessStep {
   number: string
@@ -68,6 +69,22 @@ const PROCESS_STEPS: ProcessStep[] = [
 const CTA_HEADING = 'Butuh layanan konstruksi?'
 const CTA_DESCRIPTION = 'Hubungi tim kami untuk konsultasi gratis dan penawaran harga.'
 const CTA_BUTTON = 'HUBUNGI KAMI'
+
+interface WorkDocItem {
+  title: string
+  image: string
+}
+
+const WORK_DOCS: WorkDocItem[] = [
+  { title: 'Cubicle TM Data Center', image: '/Screenshot 2026-03-13 at 20.58.10.png' },
+  { title: 'Genset Perkins Data Center', image: '/Screenshot 2026-03-13 at 20.58.40.png' },
+  { title: 'Genset FG Wilson', image: '/Screenshot 2026-03-13 at 20.59.16.png' },
+  { title: 'Genset Perkins', image: '/Screenshot 2026-03-13 at 20.59.47.png' },
+  { title: 'Genset Cummins', image: '/Screenshot 2026-03-13 at 21.00.11.png' },
+  { title: 'Genset Mitsubishi', image: '/Screenshot 2026-03-13 at 21.00.47.png' },
+  { title: 'Genset Caterpilar', image: '/Screenshot 2026-03-13 at 21.01.17.png' },
+  { title: 'Fire Suppression System', image: '/Screenshot 2026-03-13 at 21.01.45.png' },
+]
 
 // ─── Build HTML helpers ─────────────────────────────────────
 const servicesHTML = SERVICES.map(s => `
@@ -88,6 +105,14 @@ const processHTML = PROCESS_STEPS.map(p => `
         <h4 class="text-sm font-medium text-white/80 mb-2">${p.title}</h4>
         <p class="text-xs text-white/35 leading-relaxed">${p.description}</p>
       </div>`).join('')
+
+const workDocsHTML = WORK_DOCS.map(item => `
+      <article class="glass-panel overflow-hidden rounded-2xl">
+        <img src="${item.image}" alt="${item.title}" class="w-full h-52 object-cover">
+        <div class="p-5">
+          <h4 class="text-sm md:text-base font-medium text-white/85">${item.title}</h4>
+        </div>
+      </article>`).join('')
 
 // ─── Render ─────────────────────────────────────────────────
 renderPage('Our Services', PAGE_TITLE, `
@@ -146,6 +171,20 @@ renderPage('Our Services', PAGE_TITLE, `
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       ${processHTML}
+    </div>
+  </div>
+
+  <!-- Section Divider -->
+  <div class="section-divider my-4"></div>
+
+  <!-- Work Documentation Widgets -->
+  <div class="py-8 md:py-10 fade-section">
+    <div class="flex items-center gap-2 mb-7">
+      <span class="glow-dot text-blue-400"></span>
+      <span class="text-[11px] tracking-[0.2em] text-white/50 uppercase">${WORK_DOCS_LABEL}</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      ${workDocsHTML}
     </div>
   </div>
 

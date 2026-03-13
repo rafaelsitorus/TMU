@@ -25,6 +25,31 @@ const AKLI_LABEL = 'Keanggotaan'
 const AKLI_HEADING = 'Anggota resmi AKLI'
 const AKLI_DESCRIPTION = 'Keanggotaan AKLI memastikan setiap pekerjaan yang kami lakukan sesuai dengan standar nasional dan regulasi yang berlaku di Indonesia. Kami mematuhi semua prosedur keselamatan dan kualitas yang ditetapkan.'
 
+const DOCS_LABEL = 'Dokumentasi Kegiatan'
+const DOCS_HEADING = 'Aktivitas Tim'
+const DOCS_ITEMS = [
+  {
+    img: '/Screenshot 2026-03-13 at 20.10.32.png',
+    title: 'Safety briefing di area kerja',
+    caption: 'Pembekalan lapangan sebelum eksekusi pekerjaan teknis.',
+  },
+  {
+    img: '/Screenshot 2026-03-13 at 20.10.50.png',
+    title: 'Aktivasi & commissioning',
+    caption: 'Momen aktivasi power house bersama stakeholder proyek.',
+  },
+  {
+    img: '/Screenshot 2026-03-13 at 20.32.17.png',
+    title: 'Koordinasi tim lapangan',
+    caption: 'Sinkronisasi tim untuk memastikan kualitas dan keselamatan.',
+  },
+  {
+    img: 'Screenshot 2026-03-13 at 20.42.28.png',
+    title: 'Pendampingan operasional',
+    caption: 'Pendampingan teknis untuk menjaga keandalan sistem.',
+  },
+]
+
 // ─── Images ─────────────────────────────────────────────────
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&h=500&fit=crop'
 const VISION_IMAGE = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=500&fit=crop'
@@ -39,6 +64,16 @@ const statsHTML = STATS.map(s => `
 const valuesHTML = VISION_VALUES.map(v =>
   `<span class="px-4 py-1.5 glass-panel text-xs text-white/60">${v}</span>`
 ).join('\n        ')
+
+const docsHTML = DOCS_ITEMS.map(item => `
+      <article class="glass-panel overflow-hidden rounded-2xl">
+        <img src="${item.img}" alt="${item.title}" class="w-full h-52 object-cover">
+        <div class="p-5">
+          <h4 class="text-sm md:text-base font-medium text-white/85 mb-2">${item.title}</h4>
+          <p class="text-xs md:text-sm text-white/45 leading-relaxed">${item.caption}</p>
+        </div>
+      </article>
+`).join('')
 
 renderPage('About', PAGE_TITLE, `
 
@@ -103,6 +138,21 @@ renderPage('About', PAGE_TITLE, `
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
       ${statsHTML}
+    </div>
+  </div>
+
+  <!-- Section Divider -->
+  <div class="section-divider my-4"></div>
+
+  <!-- Documentation Widgets -->
+  <div class="py-8 md:py-10 fade-section">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="glow-dot text-blue-400"></span>
+      <span class="text-[11px] tracking-[0.2em] text-white/50 uppercase">${DOCS_LABEL}</span>
+    </div>
+    <h3 class="text-xl md:text-2xl font-light text-white/85 mb-6">${DOCS_HEADING}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      ${docsHTML}
     </div>
   </div>
 

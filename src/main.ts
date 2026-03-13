@@ -1,5 +1,4 @@
 import './style.css'
-import { initThreeBackground } from './three-bg'
 import { initCursor } from './cursor'
 import { productCategories, brandHref } from './product-data'
 import { INTRO_PARAGRAPH_1, STATS } from './about'
@@ -137,18 +136,18 @@ const buildMarqueeHtml = (images: string[], reverse: boolean = false) => {
 };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div class="bg-black text-white">
+  <div class="home-page bg-white text-slate-900">
   <div id="home-root" class="flex flex-col relative">
 
     <!-- Navbar -->
-    <nav class="flex-shrink-0 z-20 px-5 md:px-8 py-5 md:py-6 flex items-center gap-4">
+    <nav class="home-nav flex-shrink-0 z-20 px-5 md:px-8 py-4 md:py-5 flex items-center gap-4">
 
       <!-- Logo -->
       <a href="/" class="group flex items-center gap-3 flex-shrink-0">
-        <div class="w-11 h-11 border border-white/25 rounded-xl flex items-center justify-center group-hover:border-white/50 transition-all duration-300">
+        <div class="w-11 h-11 border border-white/40 rounded-xl flex items-center justify-center group-hover:border-white/70 transition-all duration-300">
           <span class="text-white font-semibold text-[11px] tracking-[0.2em]">TMU</span>
         </div>
-        <span class="hidden sm:block text-xs font-medium tracking-[0.18em] text-white/40 uppercase">PT. Todo Mitra Utama</span>
+        <span class="hidden sm:block text-xs font-medium tracking-[0.18em] text-white/80 uppercase">PT. Todo Mitra Utama</span>
       </a>
 
       <!-- Spacer: pushes nav links toward right -->
@@ -181,7 +180,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <a href="/contact.html" class="contact-pill hidden sm:inline-block px-6 py-2.5 rounded-full text-xs font-medium text-white/80 tracking-[0.2em] uppercase">
           Contact Us
         </a>
-        <button id="nav-open" class="md:hidden w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors">
+        <button id="nav-open" class="md:hidden w-10 h-10 flex items-center justify-center text-white/70 hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -191,7 +190,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <!-- Mobile drawer -->
     <div id="nav-drawer" class="fixed inset-0 z-50 hidden md:hidden">
       <div id="nav-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-      <div class="absolute right-0 inset-y-0 w-60 bg-black flex flex-col p-6 shadow-2xl border-l border-white/[0.07]">
+      <div class="absolute right-0 inset-y-0 w-60 bg-[#0b4ea2] flex flex-col p-6 shadow-2xl border-l border-white/20">
         <button id="nav-close" class="self-end mb-8 text-white/40 hover:text-white transition-colors">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
@@ -253,12 +252,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="flex-1 flex flex-col md:overflow-hidden">
 
       <!-- Mobile: vertical cards -->
-      <div class="md:hidden px-4 pb-6 space-y-4">
+      <div class="md:hidden px-4 pb-6 space-y-4 home-widget-reveal">
         ${mobileCardsHTML}
       </div>
 
       <!-- Desktop: horizontal carousel -->
-      <div id="carousel" class="hidden md:block overflow-x-auto overflow-y-hidden hide-scrollbar" style="height: 420px;">
+      <div id="carousel" class="hidden md:block overflow-x-auto overflow-y-hidden hide-scrollbar home-widget-reveal" style="height: 420px;">
         <div id="track" class="flex h-full items-center"> ${allCardsHTML}
         </div>
       </div>
@@ -291,7 +290,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </section>
 
       <!-- 2. Our Specialty — from RIGHT -->
-      <section class="plx-section plx-accent-amber plx-section-carousel">
+      <section class="plx-section plx-accent-amber plx-section-carousel home-point-reveal home-plain-section" data-point="02">
         <div class="plx-deco">
           <span class="plx-orb plx-orb-1"></span>
           <span class="plx-orb plx-orb-2"></span>
@@ -394,7 +393,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </section>
 
       <!-- 3. Certificates — align CENTER/FLEX -->
-      <section class="plx-section plx-accent-indigo plx-align-center" style="align-items: center; justify-content: center; text-align: center;">
+      <section class="plx-section plx-accent-indigo plx-align-center home-point-reveal home-plain-section" data-point="03" style="align-items: center; justify-content: center; text-align: center;">
         <div class="plx-deco">
           <span class="plx-orb plx-orb-1" style="background: rgba(99, 102, 241, 0.15);"></span>
           <span class="plx-orb plx-orb-2" style="background: rgba(168, 85, 247, 0.1);"></span>
@@ -463,62 +462,25 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               </div>
             `).join('')}
           </div>
-          <p class="plx-text mt-6">Kami berkomitmen terhadap kualitas, keselamatan kerja, dan ketepatan waktu dalam setiap proyek. Standar ISO dan prosedur K3 kami terapkan di seluruh lini operasional.</p>
         </div>
       </section>
 
       <!-- 4. Why Choose Us — align RIGHT -->
-      <section class="plx-section plx-accent-violet plx-align-right">
-        <div class="plx-deco">
-          <span class="plx-orb plx-orb-1"></span>
-          <span class="plx-orb plx-orb-2"></span>
-          <span class="plx-hex plx-hex-1"></span>
-          <span class="plx-dots"></span>
-          <span class="plx-grid-lines"></span>
-          <span class="plx-bg-block plx-bg-block-1"></span>
-          <span class="plx-bg-block plx-bg-block-2"></span>
-          <span class="plx-bg-line plx-bg-line-2"></span>
-          <span class="plx-bg-circle plx-bg-circle-1"></span>
-          <span class="plx-bg-circle plx-bg-circle-2"></span>
-        </div>
-        <div class="plx-inner plx-from-right">
-          <span class="plx-label">05</span>
-          <h2 class="plx-heading">Why Choose Us</h2>
-          <div class="plx-list">
-            <div class="plx-list-item">
-              <span class="plx-list-bullet"></span>
-              <div>
-                <h4 class="plx-list-title">Anggota Resmi AKLI</h4>
-                <p class="plx-list-desc">Terdaftar dan bersertifikasi oleh Asosiasi Kontraktor Listrik dan Mekanikal Indonesia.</p>
-              </div>
-            </div>
-            <div class="plx-list-item">
-              <span class="plx-list-bullet"></span>
-              <div>
-                <h4 class="plx-list-title">Tim Berpengalaman</h4>
-                <p class="plx-list-desc">Tenaga ahli profesional dengan sertifikasi dan pengalaman bertahun-tahun di bidangnya.</p>
-              </div>
-            </div>
-            <div class="plx-list-item">
-              <span class="plx-list-bullet"></span>
-              <div>
-                <h4 class="plx-list-title">Kualitas Terjamin</h4>
-                <p class="plx-list-desc">Material berkualitas dari brand terpercaya dengan garansi dan sertifikasi standar.</p>
-              </div>
-            </div>
-            <div class="plx-list-item">
-              <span class="plx-list-bullet"></span>
-              <div>
-                <h4 class="plx-list-title">Harga Kompetitif</h4>
-                <p class="plx-list-desc">Penawaran harga terbaik dengan tetap mengutamakan kualitas dan keselamatan.</p>
-              </div>
-            </div>
+      <section class="plx-section home-point-section home-point-section--left home-point-reveal" data-point="05">
+        <div class="home-point-card">
+          <div class="home-point-media">
+            <img src="/card5.png" alt="Poin 05 - Solusi Terpercaya" class="home-point-image">
+          </div>
+          <div class="home-point-copy">
+            <span class="home-point-label">05</span>
+            <h2 class="home-point-heading">Trusted Solutions for Critical Infrastructure</h2>
+            <p class="home-point-text">Over the years, we have successfully delivered a wide range of projects, consistently meeting the evolving needs of our clients. This long-standing experience enables us to offer reliable, forward-thinking solutions that enhance both performance and sustainability for businesses in today's fast-paced digital world.</p>
           </div>
         </div>
       </section>
 
       <!-- 5. Let's Build Together — from LEFT -->
-      <section class="plx-section plx-accent-warm">
+      <section class="plx-section plx-accent-warm home-plain-section home-tail-section" data-point="06">
         <div class="plx-deco">
           <span class="plx-orb plx-orb-1"></span>
           <span class="plx-orb plx-orb-2"></span>
@@ -534,7 +496,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div><!-- end parallax sections -->
 
     <!-- Footer -->
-    <footer class="z-10 bg-[#0a0a0a] border-t border-white/[0.06]">
+    <footer class="z-10 bg-[#0b4ea2] border-t border-white/20">
       <div class="max-w-7xl mx-auto px-6 md:px-10 py-14 md:py-20">
 
         <!-- Top row -->
@@ -616,12 +578,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </footer>
 
   </div><!-- end outer wrapper -->
-
-  <!-- Theme toggle button (bottom-right) -->
-  <button id="theme-toggle" class="theme-toggle-btn" title="Toggle light/dark mode">
-    <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  </button>
 `
 
 // ─── Mobile nav drawer ───────────────────────────────────────
@@ -660,10 +616,6 @@ document.querySelectorAll('.mob-cat-toggle').forEach(btn => {
     brands?.classList.toggle('hidden')
   })
 })
-
-// ─── Three.js wireframe background ──────────────────────────
-const mainDiv = document.getElementById('home-root')!
-initThreeBackground(mainDiv)
 
 // ─── Custom cursor ───────────────────────────────────────────
 initCursor()
@@ -1014,7 +966,6 @@ function initTiltCards() {
   })
 }
 setTimeout(initTiltCards, 200)
-
 // ─── Theme toggle (light/dark) ──────────────────────────────
 const themeBtn = document.getElementById('theme-toggle')!
 const htmlEl = document.documentElement

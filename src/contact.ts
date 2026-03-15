@@ -27,7 +27,7 @@ renderPage('Contact', PAGE_TITLE, `
             </div>
             <div>
               <span class="text-[10px] tracking-[0.2em] text-white/30 uppercase block mb-1">Telepon</span>
-              <span class="text-sm text-white/80">+62 21 1234 5678</span>
+              <span class="text-sm text-white/80">021-5655080 / 81</span>
             </div>
           </div>
 
@@ -37,7 +37,7 @@ renderPage('Contact', PAGE_TITLE, `
             </div>
             <div>
               <span class="text-[10px] tracking-[0.2em] text-white/30 uppercase block mb-1">Email</span>
-              <span class="text-sm text-white/80">info@todomitra.co.id</span>
+              <span class="text-sm text-white/80"> todomitrautama@yahoo.co.id / adm@todomitrautama.com</span>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ renderPage('Contact', PAGE_TITLE, `
             </div>
             <div>
               <span class="text-[10px] tracking-[0.2em] text-white/30 uppercase block mb-1">Alamat</span>
-              <span class="text-sm text-white/80">Jakarta Barat, DKI Jakarta<br>Indonesia</span>
+              <span class="text-sm text-white/80">Jl. Daan Mogot 45 A/5 RT 010 RW 003,Jelambar, Grogol Petamburan, Jakarta<br>Indonesia</span>
             </div>
           </div>
         </div>
@@ -108,6 +108,13 @@ renderPage('Contact', PAGE_TITLE, `
               Pesan berhasil dikirim!
             </div>
           </div>
+
+          <div id="form-error" class="hidden text-center py-4">
+            <div class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-900/40 text-red-400 border border-red-500/30 rounded-full text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              Gagal mengirim pesan. Coba lagi.
+            </div>
+          </div>
         </form>
       </div>
 
@@ -127,37 +134,61 @@ renderPage('Contact', PAGE_TITLE, `
         <p class="text-sm text-white/50 leading-relaxed mb-6">Jakarta Barat, DKI Jakarta<br>Indonesia</p>
         
         <div class="space-y-3">
-          <p class="text-sm text-white/40"><span class="text-white/70 block mb-1">Senin – Jumat</span> 08.00 – 17.00 WIB</p>
-          <div class="h-px w-8 bg-white/10"></div>
-          <p class="text-sm text-white/40"><span class="text-white/70 block mb-1">Sabtu</span> 08.00 – 12.00 WIB</p>
+          <p class="text-sm text-white/40"><span class="text-white/70 block mb-1">Senin – Sabtu</span> 08.00 – 17.00 WIB</p>
           <div class="h-px w-8 bg-white/10"></div>
           <p class="text-sm text-white/40"><span class="text-white/70 block mb-1">Minggu</span> Tutup</p>
         </div>
       </div>
       
-      <div class="glass-panel overflow-hidden rounded-2xl h-64 md:h-full min-h-[250px] flex flex-col items-center justify-center relative">
-        <svg class="w-10 h-10 text-white/20 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-        <span class="text-[10px] tracking-[0.2em] text-white/30 uppercase">Map Integration Here</span>
-        
-        <!-- Subtle decorative grid -->
-        <div class="absolute inset-0 z-[-1]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 20px 20px;"></div>
+      <div class="overflow-hidden rounded-2xl h-64 md:h-full min-h-[250px]">
+        <iframe
+          src="https://maps.google.com/maps?q=Jl.+Daan+Mogot+45+A%2F5+RT+010+RW+003%2C+Jelambar%2C+Grogol+Petamburan%2C+Jakarta%2C+Indonesia&output=embed&z=17"
+          width="100%"
+          height="100%"
+          style="border:0; min-height:250px; display:block;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </div>
   </div>
 
 `)
 
-// Wire up form submission
+// ─── EmailJS Config ──────────────────────────────────────────
+// Daftarkan akun gratis di https://www.emailjs.com/
+// Lalu isi nilai berikut:
+const EMAILJS_PUBLIC_KEY  = 'GANTI_DENGAN_PUBLIC_KEY_ANDA'   // Account → API Keys
+const EMAILJS_SERVICE_ID  = 'GANTI_DENGAN_SERVICE_ID_ANDA'   // Email Services → Service ID
+const EMAILJS_TEMPLATE_ID = 'GANTI_DENGAN_TEMPLATE_ID_ANDA'  // Email Templates → Template ID
+
+// ─── Wire up form submission ──────────────────────────────────
+import emailjs from '@emailjs/browser'
+emailjs.init(EMAILJS_PUBLIC_KEY)
+
 const form = document.getElementById('contact-form') as HTMLFormElement | null
-const success = document.getElementById('form-success')
-form?.addEventListener('submit', (e) => {
+const successBanner = document.getElementById('form-success')
+const errorBanner   = document.getElementById('form-error')
+
+form?.addEventListener('submit', async (e) => {
   e.preventDefault()
-  // Simulate sending
   const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement
   btn.textContent = 'MENGIRIM...'
   btn.disabled = true
-  setTimeout(() => {
-    form.style.display = 'none'
-    success?.classList.remove('hidden')
-  }, 1200)
+  successBanner?.classList.add('hidden')
+  errorBanner?.classList.add('hidden')
+
+  try {
+    await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+    successBanner?.classList.remove('hidden')
+    form.reset()
+    setTimeout(() => successBanner?.classList.add('hidden'), 5000)
+  } catch {
+    errorBanner?.classList.remove('hidden')
+    setTimeout(() => errorBanner?.classList.add('hidden'), 5000)
+  } finally {
+    btn.textContent = 'KIRIM PESAN'
+    btn.disabled = false
+  }
 })

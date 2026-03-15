@@ -16,9 +16,10 @@ const VISION_VALUES = ['Inovasi', 'Kualitas', 'Keselamatan', 'Integritas']
 const STATS_LABEL = 'Pencapaian'
 const STATS = [
   { value: '50+', label: 'Proyek Selesai' },
-  { value: '15+', label: 'Tahun Pengalaman' },
-  { value: '30+', label: 'Tenaga Ahli' },
+  { value: '25+', label: 'Tahun Pengalaman' },
+  { value: '20+', label: 'Tenaga Ahli' },
   { value: '100%', label: 'Kepuasan Klien' },
+  { value: '400+', label: 'Labor Supply' }
 ]
 
 const AKLI_LABEL = 'Keanggotaan'
@@ -56,9 +57,9 @@ const VISION_IMAGE = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1
 
 // ─── Render ─────────────────────────────────────────────────
 const statsHTML = STATS.map(s => `
-      <div>
-        <div class="text-3xl md:text-5xl font-light text-white mb-1">${s.value}</div>
-        <div class="text-[10px] tracking-[0.15em] text-white/30 uppercase">${s.label}</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-2xl md:text-4xl font-light text-white mb-0.5">${s.value}</div>
+        <div class="text-[10px] tracking-[0.08em] text-white/30 uppercase leading-tight">${s.label}</div>
       </div>`).join('')
 
 const valuesHTML = VISION_VALUES.map(v =>
@@ -136,7 +137,7 @@ renderPage('About', PAGE_TITLE, `
       <span class="glow-dot text-blue-400"></span>
       <span class="text-[11px] tracking-[0.2em] text-white/50 uppercase">${STATS_LABEL}</span>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div class="flex gap-3">
       ${statsHTML}
     </div>
   </div>
@@ -166,9 +167,6 @@ renderPage('About', PAGE_TITLE, `
         <span class="text-[10px] tracking-[0.2em] text-white/30 uppercase">${AKLI_LABEL}</span>
         <h3 class="text-xl font-light mt-2 mb-4 text-white/80">${AKLI_HEADING}</h3>
         <p class="text-sm text-white/40 leading-relaxed">${AKLI_DESCRIPTION}</p>
-      </div>
-      <div class="w-24 h-24 glass-panel flex items-center justify-center flex-shrink-0">
-        <span class="text-white/50 text-xs font-bold tracking-wider">AKLI</span>
       </div>
     </div>
   </div>

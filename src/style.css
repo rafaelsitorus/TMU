@@ -114,15 +114,11 @@ body {
 }
 
 .home-nav .nav-pill {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .home-nav .nav-pill:hover {
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.35);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 .home-nav [class*="text-white"] {
@@ -130,12 +126,11 @@ body {
 }
 
 [data-theme="light"] .home-nav .nav-pill {
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 
 [data-theme="light"] .home-nav .nav-pill:hover {
   color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 [data-theme="light"] .home-nav [class*="text-white"] {
@@ -144,19 +139,16 @@ body {
 
 /* Home page mobile drawer — keep white text on blue bg */
 #nav-drawer .nav-pill {
-  color: rgba(255, 255, 255, 0.88) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 #nav-drawer .nav-pill:hover {
   color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.16) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
 }
 [data-theme="light"] #nav-drawer .nav-pill {
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 [data-theme="light"] #nav-drawer .nav-pill:hover {
   color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.2) !important;
 }
 #nav-drawer .mob-cat-toggle {
   color: rgba(255, 255, 255, 0.7);
@@ -267,21 +259,32 @@ body.c-hover #c-ring {
   background: rgba(59, 130, 246, 0.06);
 }
 
-/* Navbar pill links */
+/* Navbar links — clean text, no pill */
 .nav-pill {
   display: inline-block;
   padding: 0.45rem 1.1rem;
-  border-radius: 9999px;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--nav-pill-text);
-  border: 1px solid transparent;
   background: transparent;
-  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease,
-              box-shadow 0.25s ease, transform 0.2s ease;
+  border: none;
+  position: relative;
+  transition: color 0.2s ease, opacity 0.2s ease;
   -webkit-tap-highlight-color: transparent;
+}
+.nav-pill::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 60%;
+  height: 1px;
+  background: currentColor;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
 }
 /* ~1.5× larger variant for navbar desktop links */
 .nav-pill.nav-pill-lg {
@@ -290,19 +293,15 @@ body.c-hover #c-ring {
   letter-spacing: 0.12em;
 }
 .nav-pill:hover {
-  color: var(--nav-pill-hover-text);
-  background: var(--nav-pill-hover-bg);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border-color: var(--border-light);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 3px 12px rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
+  color: #ffffff;
+  opacity: 1;
+}
+.nav-pill:hover::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 0.45;
 }
 .nav-pill:active {
-  transform: scale(0.96);
-  background: rgba(59, 130, 246, 0.05);
+  opacity: 0.65;
 }
 
 /* ── Product mega-menu (desktop navbar) ── */
@@ -848,11 +847,13 @@ body.c-hover #c-ring {
 .plx-align-right .plx-inner { max-width: 680px; }
 
 /* ── Hidden (before scroll) ── */
-.plx-from-left  { opacity: 0; transform: translateX(-90px); }
-.plx-from-right { opacity: 0; transform: translateX(90px); }
+.plx-from-left   { opacity: 0; transform: translateX(-90px); }
+.plx-from-right  { opacity: 0; transform: translateX(90px); }
+.plx-from-bottom { opacity: 0; transform: translateY(60px); }
 /* ── Visible (after scroll) ── */
 .plx-from-left.plx-visible,
-.plx-from-right.plx-visible { opacity: 1; transform: translateX(0); }
+.plx-from-right.plx-visible,
+.plx-from-bottom.plx-visible { opacity: 1; transform: translate(0); }
 
 /* ══════════════════════════════════════════
    Decoration container
@@ -1139,8 +1140,9 @@ body.c-hover #c-ring {
   .plx-stats { gap: 20px; }
   .plx-carousel { gap: 14px; padding: 16px 4px 16px; }
   .plx-tilt-card { flex: 0 0 250px; padding: 26px 20px; min-height: 180px; }
-  .plx-from-left  { transform: translateX(-50px); }
-  .plx-from-right { transform: translateX(50px); }
+  .plx-from-left   { transform: translateX(-50px); }
+  .plx-from-right  { transform: translateX(50px); }
+  .plx-from-bottom { transform: translateY(30px); }
   .plx-orb-1 { width: 200px; height: 200px; }
   .plx-orb-2 { width: 160px; height: 160px; }
   .plx-bg-block, .plx-bg-circle { display: none; }
@@ -1214,9 +1216,6 @@ body.c-hover #c-ring {
 }
 [data-theme="light"] .nav-pill:hover {
   color: var(--nav-pill-hover-text);
-  background: var(--nav-pill-hover-bg);
-  border-color: var(--border-light);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 3px 12px rgba(0,0,0,0.08);
 }
 
 /* Logo */
@@ -1450,9 +1449,6 @@ body.c-hover #c-ring {
 }
 [data-theme="light"] .nav-pill:hover {
   color: var(--nav-pill-hover-text);
-  background: var(--nav-pill-hover-bg);
-  border-color: var(--border-light);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 3px 12px rgba(0,0,0,0.08);
 }
 
 /* Contact pill */
@@ -1863,7 +1859,28 @@ body.c-hover #c-ring {
   border-bottom: none;
 }
 
+/* ── Hero background image ── */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.25;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ── Background decorations ── */
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.72);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .ch-bg-deco {
   display: none;
 }

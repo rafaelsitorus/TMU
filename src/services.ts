@@ -5,7 +5,7 @@ const PAGE_TITLE = 'Layanan konstruksi profesional'
 
 const INTRO_HEADING = 'Solusi konstruksi menyeluruh.'
 const INTRO_PARAGRAPH_1 = 'Kami menyediakan layanan konstruksi mekanikal dan elektrikal yang komprehensif. Dari perencanaan hingga perawatan, tim ahli kami siap mendukung setiap tahap proyek Anda.'
-const INTRO_PARAGRAPH_2 = 'Dengan pengalaman lebih dari 15 tahun, kami memahami kebutuhan unik setiap proyek dan memberikan solusi yang tepat sasaran dan efisien.'
+const INTRO_PARAGRAPH_2 = 'Dengan pengalaman lebih dari 25 tahun, kami memahami kebutuhan unik setiap proyek dan memberikan solusi yang tepat sasaran dan efisien.'
 const INTRO_CTA = 'Hubungi kami untuk konsultasi.'
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&h=500&fit=crop'

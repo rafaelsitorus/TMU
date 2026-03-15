@@ -4,7 +4,7 @@ import { renderPage } from './layout'
 const PAGE_TITLE = 'Proyek yang telah selesai'
 
 const INTRO_HEADING = 'Rekam jejak proyek kami.'
-const INTRO_PARAGRAPH_1 = 'Selama lebih dari 15 tahun, kami telah menyelesaikan berbagai proyek konstruksi mekanikal dan elektrikal di seluruh Indonesia dengan hasil yang memuaskan.'
+const INTRO_PARAGRAPH_1 = 'Selama lebih dari 25 tahun, kami telah menyelesaikan berbagai proyek konstruksi mekanikal dan elektrikal di seluruh Indonesia dengan hasil yang memuaskan.'
 const INTRO_PARAGRAPH_2 = 'Setiap proyek adalah bukti komitmen kami terhadap kualitas, ketepatan waktu, dan kepuasan klien.'
 const INTRO_CTA = 'Lihat apa yang telah kami capai.'
 

@@ -6,6 +6,13 @@ export default {
       url.hostname = host.slice(4);
       return Response.redirect(url.toString(), 301);
     }
+
+    const url = new URL(request.url);
+    if (url.pathname === '/') {
+      url.pathname = '/index.html';
+      return env.ASSETS.fetch(url);
+    }
+
     return env.ASSETS.fetch(request);
   }
 }
